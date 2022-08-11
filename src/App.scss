@@ -1,0 +1,12 @@
+@import 'variables';
+
+.App{
+
+    display: grid;
+    grid-template-columns: 1fr $desktop-width 1fr;
+    background-color: $secondary-color;
+    margin: 0;
+    display: grid;
+    justify-content: center;
+    font-family: $font-family;
+}

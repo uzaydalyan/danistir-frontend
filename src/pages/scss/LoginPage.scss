@@ -1,0 +1,39 @@
+@import 'variables';
+
+.login-page {
+
+    grid-column: 2 / 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 100px;
+    border: 1px solid #DADADA;
+    height: 794px;
+    border-radius: 8px;
+    
+
+.banner {
+
+    position: absolute;
+    width: 568px;
+    background-color: black;
+    height: 794px;
+    background-image: url('https://i.ibb.co/kxtQQ0R/login-banner.png');
+    transition: background-image 2s, margin-left 2s, border-radius 2s;
+    z-index: 10;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+    .banner-text {
+
+        width: 223px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 44px;
+        line-height: 61px;
+        color: #FFFFFFCC;
+        margin-left: 30px;
+        margin-top: 450px;
+        transition: opacity 1s, margin-left 1.5s;
+    }
+}

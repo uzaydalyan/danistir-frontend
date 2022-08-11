@@ -1,0 +1,48 @@
+@import 'variables';
+
+.register{
+
+    display: grid;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 146px;
+    padding-top: 200px;
+
+    .title {
+
+        margin-bottom: 50px;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 48px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+
+    .text-field{
+
+        margin: 0;
+        margin-bottom: 30px;
+    }
+
+    .text-field-left{
+
+        margin-right: 16px;
+    }
+
+    .submit-button {
+
+        width: 300px;
+        text-transform: capitalize;
+    }
+
+    .login-text {
+
+        margin-top: 50px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 28px;
+        color: #000000CC;
+        cursor: pointer;
+    }
+}
