@@ -79,3 +79,48 @@
         margin-top: 90px;
     }
 }
+
+@media(max-width: $desktop-width){
+
+    .home .home-banner{
+
+        height: 400px;
+    }
+
+    .home .home-banner .banner-content{
+
+        grid-row-gap: 40px;
+        margin-top: 40px;
+    }
+
+    .home .home-banner .banner-content .banner-big-title{
+
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    .home .home-banner .banner-content .banner-small-title{
+
+        font-size: 18px;
+    }
+
+    .home .home-banner .banner-content .search-bar{
+
+        height: 55px;
+    }
+
+    .home .home-banner .banner-content .search-bar .search-bar-button{
+
+        height: 55px;
+    }
+
+    .home .home-banner .banner-content .search-bar .search-bar-input{
+
+        font-size: 16px;
+    }
+
+    .home .card-list{
+
+        margin-top: 70px;
+    }
+}
