@@ -124,3 +124,15 @@
         margin-top: 0px;
     }
 }
+
+@media(max-width: $tablet-width){
+
+    .home .home-banner .banner-content .search-bar {
+        width: 335px;
+        height: 50px;
+    }
+
+    .home .home-banner .banner-content .search-bar .search-bar-button {
+        height: 50px;
+    }
+}

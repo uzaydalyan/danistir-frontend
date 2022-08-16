@@ -17,3 +17,10 @@
         grid-template-columns: 1fr $tablet-width 1fr;
     }
 }
+
+@media(max-width: $tablet-width){
+
+    .App {
+        grid-template-columns: 1fr $mobile-width 1fr;
+    }
+}

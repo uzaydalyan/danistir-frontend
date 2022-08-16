@@ -25,7 +25,7 @@ function CrossCard(props) {
             <p>{props.paragraph}</p>
           </div>
 
-          <div className="cross-img">
+          <div className="cross-img cross-img-right">
             <img src={props.imgSrc} />
           </div>
         </div>
@@ -38,7 +38,7 @@ function CrossCard(props) {
       <div className='cross-card-bg-gray'>
         <div className="cross-card">
 
-          <div className="cross-img">
+          <div className="cross-img-left">
             <img src={props.imgSrc} />
           </div>
           <div className="cross-text cross-text-right">
