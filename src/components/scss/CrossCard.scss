@@ -8,6 +8,7 @@
     justify-self: center;
     border-radius: 8px;
     height: 400px;
+    align-items: end;
 
     .cross-text{
 
@@ -63,4 +64,61 @@
     background-color: #f3f3f3;
     display: grid;
     justify-content: center;
+}
+
+@media(max-width: $desktop-width){
+
+    .cross-card{
+
+        width: $tablet-width;
+        height: unset;
+    }
+
+    .cross-card .cross-text h2{
+
+        font-size: 24px;
+    }
+
+    .cross-card .cross-text p{
+
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .cross-card .cross-img img{
+
+        height: unset;
+    }
+
+    .cross-card .cross-text {
+        padding-top: 70px;
+        padding-bottom: 60px;
+    }
+}
+
+@media (max-width: $tablet-width){
+
+    .cross-card {
+        grid-template-columns: unset;
+        grid-template-rows: auto 1fr;
+        width: 375px;
+        height: unset;
+    }
+
+    .cross-text{
+
+        text-align: center !important;
+        padding: 0 !important;
+        padding-right: 50px;
+        grid-row: 1 / 2;
+        margin-top: 40px;
+        margin-bottom: 15px;
+    }
+
+    .cross-img{
+
+        text-align: right;
+        padding-left: 50px;
+        grid-row: 2 / 3;
+    }
 }

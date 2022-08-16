@@ -6,7 +6,21 @@
     grid-template-columns: 1fr $desktop-width 1fr;
     background-color: $secondary-color;
     margin: 0;
-    display: grid;
     justify-content: center;
     font-family: $font-family;
+}
+
+@media(max-width: $desktop-width){
+
+    .App{
+
+        grid-template-columns: 1fr $tablet-width 1fr;
+    }
+}
+
+@media(max-width: $tablet-width){
+
+    .App {
+        grid-template-columns: 1fr $mobile-width 1fr;
+    }
 }
