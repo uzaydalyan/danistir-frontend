@@ -1,9 +1,8 @@
-import '../scss/LoginPage.scss'
-import Login from '../../components/js/Login';
-import Register from '../../components/js/Register';
+import './LoginPage.scss'
+import Login from './components/js/Login';
+import Register from './components/js/Register';
 import { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
-import Registerimg from '../../register-banner.png';
 
 /*interface props{
 

@@ -9,10 +9,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Button } from '@mui/material';
 import { useState } from 'react';
-import { FormHelperText } from '@mui/material';
+import { useCookies } from 'react-cookie'
+
 
 
 function Login(props) {
+
+  const [cookies, setCookie] = useCookies(['access_token'])
 
   const [values, setValues] = useState({
     email: '',
@@ -37,7 +40,7 @@ function Login(props) {
 
   const handleSubmit = () => {
 
-    fetch('http://127.0.0.1:8000/api/login/', {
+    fetch('http://danistir.herokuapp.com/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -48,16 +51,22 @@ function Login(props) {
         "password" : values.password
       })}).then((response) => {
 
-        console.log(response);
-
         if(response.status == 200){
 
-          alert("Login Succeded!");
+          return response.json();
         }
         else{
           alert("Go Away!");
+          return null
         }
-      })
+      }).then(function(data) {
+        if(data != null){
+          console.log(data.access_token);
+          setCookie("danistir_access_token", data.access_token, {path: "/"});
+          window.location.href = '/';
+        }
+        
+      });
   };
 
   return(
