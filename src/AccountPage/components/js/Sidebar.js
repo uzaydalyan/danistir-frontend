@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AccountInfo from './AccountInfo';
+import ChangePassword from './ChangePassword';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -67,8 +68,7 @@ export default function Sidebar() {
                 <AccountInfo />
             </TabPanel>
             <TabPanel value={value} index={1}>
-
-          
+                <ChangePassword />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 Item Three
