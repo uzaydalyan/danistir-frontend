@@ -1,70 +1,12 @@
-import * as React from 'react';
-import '../scss/Sidebar.scss'
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import React from "react";
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+function AccountInfo(/*props: props*/) {
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
 
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
+  return (
 
-function a11yProps(index) {
-    return {
-        id: `vertical-tab-${index}`,
-        'aria-controls': `vertical-tabpanel-${index}`,
-    };
-}
-
-export default function Sidebar() {
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    return (
-        <Box
-            sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
-        >
-            <Tabs
-                orientation="vertical"
-                variant="scrollable"
-                value={value}
-                onChange={handleChange}
-                aria-label="Vertical tabs example"
-                sx={{ borderRight: 1, borderColor: 'divider' }}
-            >
-                <Tab label="Hesap Bilgileri" {...a11yProps(0)} />
-                <Tab label="Güvenlik Bilgileri" {...a11yProps(1)} />
-                <Tab label="Ödeme Yöntemleri" {...a11yProps(2)} />
-            </Tabs>
-            <TabPanel value={value} index={0}>
-                <div>
-                <h3 class="form-title">Hesap Bilgileri</h3>
+    <div className="account-info">
+      <h3 class="form-title">Hesap Bilgileri</h3>
                     <div className="md:grid md:grid-cols-3 md:gap-6">
                         <div className="mt-5 md:mt-0 md:col-span-2">
                             <form action="#" method="POST">
@@ -339,60 +281,8 @@ export default function Sidebar() {
                             </form>
                         </div>
                     </div>
-                </div>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-
-            <h3 class="form-title">Şifrenizi Değiştirin</h3>
-                <form action="#" method="POST">
-                    <div className="col-span-10 sm:col-span-3 w-64">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Şu Anki Şifre
-                        </label>
-                        <input
-                            type="password"
-                            name="current-password"
-                            id="current-password"
-                            autoComplete="given-password"
-                            className="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                    </div>
-                    <div className="col-span-6 sm:col-span-3 mt-6">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Yeni Şifre
-                        </label>
-                        <input
-                            type="password"
-                            name="new-password"
-                            id="new-password"
-                            className="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                    </div>
-                    <div className="col-span-6 sm:col-span-3 mt-6">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Yeni Şifre (Tekrar)
-                        </label>
-                        <input
-                            type="password"
-                            name="new-password2"
-                            id="new-password2"
-                            className="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                    </div>
-
-                    <div className="py-5 bg-gray-50 text-right">
-                                        <button
-                                            type="submit"
-                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                                        >
-                                            Save
-                                        </button>
-                                    </div>
-                </form>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                Item Three
-            </TabPanel>
-        </Box>
-    );
+    </div>
+  );
 }
+
+export default AccountInfo;
