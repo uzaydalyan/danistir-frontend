@@ -24,3 +24,7 @@
         grid-template-columns: 1fr $mobile-width 1fr;
     }
 }
+
+input:focus {
+    box-shadow: none !important;
+}

@@ -5,6 +5,7 @@ import Navbar from './CommonComponents/js/Navbar'
 import Account from './AccountPage/Account';
 import { useCookies } from 'react-cookie'
 import HomePage from './HomePage/HomePage';
+import SearchResults from './SearchResultsPage/SearchResultsPage';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/" element={hasJWT() ?  <HomePage /> : <Navigate to="/login" />} /> 
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/account" element={hasJWT() ?  <Account /> : <Navigate to="/login" />} /> 
+          <Route exact path="/search_results" element={hasJWT() ?  <SearchResults /> : <Navigate to="/login" />} /> 
         </Routes>
       </BrowserRouter>
     </div>
