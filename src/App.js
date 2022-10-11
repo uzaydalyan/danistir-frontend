@@ -1,21 +1,35 @@
 import './App.scss';
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from './pages/js/LoginPage';
-import Navbar from './components/js/Navbar'
-import Account from './pages/js/Account';
-import HomePage from './pages/js/HomePage';
+import { BrowserRouter, Routes, Navigate, Route} from "react-router-dom";
+import LoginPage from './LoginPage/LoginPage';
+import Navbar from './CommonComponents/js/Navbar'
+import Account from './AccountPage/Account';
+import { useCookies } from 'react-cookie'
+import HomePage from './HomePage/HomePage';
+import SearchResults from './SearchResultsPage/SearchResultsPage';
 
 
 function App() {
+
+  const [cookies, setCookie] = useCookies(['access_token'])
+
+  function hasJWT() {
+    let flag = false;
+    //check user has JWT token
+    cookies.danistir_access_token ? flag=true : flag=false
+   
+    return flag
+}
+
+
   return (
     <div className="App">
       <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route path="" element={<HomePage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="account" element={<Account />} />
+          <Route exact path="/" element={hasJWT() ?  <HomePage /> : <Navigate to="/login" />} /> 
+          <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/account" element={hasJWT() ?  <Account /> : <Navigate to="/login" />} /> 
+          <Route exact path="/search_results" element={hasJWT() ?  <SearchResults /> : <Navigate to="/login" />} /> 
         </Routes>
       </BrowserRouter>
     </div>

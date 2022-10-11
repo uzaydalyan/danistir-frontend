@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CrossCard from "../../components/js/CrossCard";
-import '../scss/HomePage.scss'
+import CrossCard from "./components/js/CrossCard";
+import './HomePage.scss'
 
 function HomePage() {
 

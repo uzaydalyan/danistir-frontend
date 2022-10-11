@@ -25,7 +25,6 @@ function Register(props) {
 
   const handleChange = (prop) => (event) => {
       setValues({ ...values, [prop]: event.target.value });
-      console.log(values);
     };
 
   const handleClickShowPassword = () => {
@@ -38,17 +37,37 @@ function Register(props) {
 
   const handleSubmit = () => {
 
-    fetch('http://127.0.0.1:8000/api/users/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "email" : values.email,
-        "password" : values.password
+    if(values.password == values.passwordverification){
+
+      fetch('http://danistir.herokuapp.com/register', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "email" : values.email,
+          "password" : values.password
+        })
+      }).then((response) => {
+
+        console.log(response);
+
+        if(response.status == 200){
+
+          alert("Registered!");
+        }
+        else{
+          console.log(response);
+          alert("Go Away!");
+        }
       })
-    })
+    } else {
+
+        alert("Passwords are different!");
+    }
+
+    
   };
 
 

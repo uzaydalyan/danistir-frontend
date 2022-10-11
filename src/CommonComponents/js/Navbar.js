@@ -2,6 +2,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { useCookies } from 'react-cookie'
 
 const navigation = [
   { name: 'Anasayfa', href: '/', current: true },
@@ -13,7 +14,18 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
 export default function Navbar() {
+
+  const [cookies, setCookie, removeCookie] = useCookies(['danistir_access_token'])
+
+  function signOut(){
+
+    removeCookie('danistir_access_token')
+    window.location.href = '/login'
+  }
+
   return (
     <Disclosure as="nav" className="bg-primary col-span-3">
       {({ open }) => (
@@ -117,6 +129,7 @@ export default function Navbar() {
                         {({ active }) => (
                           <a
                             href="#"
+                            onClick={() => signOut()}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out

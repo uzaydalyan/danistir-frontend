@@ -1,0 +1,27 @@
+@import 'variables';
+
+.search-results{
+
+    margin-top: 100px;
+    display: grid;
+    grid-column: 2 / 3;
+    width: 1136px;
+    grid-template-columns: 1fr 41px 3fr;
+
+    .search-results-seperator{
+
+        height: 100%;
+        width: 1px;
+        margin: 0px 20px;
+        background-color: #B0B2B8;
+    }
+
+    .search-results-list{
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+    }
+
+}
