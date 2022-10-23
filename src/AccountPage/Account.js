@@ -3,6 +3,7 @@ import Sidebar from './components/js/Sidebar';
 import { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
 
+
 function Account(/*props: props*/) {
 
  

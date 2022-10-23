@@ -6,6 +6,7 @@ import Account from './AccountPage/Account';
 import { useCookies } from 'react-cookie'
 import HomePage from './HomePage/HomePage';
 import SearchResults from './SearchResultsPage/SearchResultsPage';
+import ConsultantAccountPage from './ConsultantAccountPage/ConsultantAccountPage';
 
 
 function App() {
@@ -26,10 +27,11 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={hasJWT() ?  <HomePage /> : <Navigate to="/login" />} /> 
+          <Route exact path="/" element={<HomePage />} /> 
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/account" element={hasJWT() ?  <Account /> : <Navigate to="/login" />} /> 
-          <Route exact path="/search_results" element={hasJWT() ?  <SearchResults /> : <Navigate to="/login" />} /> 
+          <Route exact path="/search_results" element={<SearchResults />} /> 
+          <Route exact path="/account_c" element={<ConsultantAccountPage />} /> 
         </Routes>
       </BrowserRouter>
     </div>

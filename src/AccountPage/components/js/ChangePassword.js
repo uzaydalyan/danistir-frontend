@@ -5,7 +5,7 @@ function ChangePassword(/*props: props*/) {
     return (
         <div>
             <h3 class="form-title">Şifrenizi Değiştirin</h3>
-            <form action="#" method="POST">
+            <form className="account-all-content" action="#" method="POST">
                 <div className="col-span-10 sm:col-span-3 w-64">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                         Şu Anki Şifre
