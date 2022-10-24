@@ -20,62 +20,53 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
 
-function getStyles(name, personName, theme) {
+function getStyles(one, option, theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      option.indexOf(one) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
 }
 
-const handleDelete = () => {
-    console.info('You clicked the Chip.');
-}
 
-export default function ChipSelector() {
+
+export default function ChipSelector(props) {
+
+  const options = props.options
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [option, setOption] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
+    setOption(
       typeof value === 'string' ? value.split(',') : value,
     );
     
   };
 
+  const handleDelete = (optionToDelete) => {
+    setOption( (allOptions) =>  allOptions.filter(one => one !== optionToDelete));
+}
+
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Alan</InputLabel>
+        <InputLabel id="demo-multiple-chip-label">{props.label}</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={personName}
+          value={option}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Alan" />}
+          input={<OutlinedInput id="select-multiple-chip" label={props.label} />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} onDelete={handleDelete} deleteIcon={
+                <Chip key={value} label={value} onDelete={(e) => handleDelete(value)} deleteIcon={
                     <CancelRounded
                       onMouseDown={(event) => event.stopPropagation()}
                     />
@@ -85,13 +76,13 @@ export default function ChipSelector() {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {options.map((one) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
+              key={one}
+              value={one}
+              style={getStyles(one, option, theme)}
             >
-              {name}
+              {one}
             </MenuItem>
           ))}
         </Select>
