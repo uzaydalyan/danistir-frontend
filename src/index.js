@@ -11,6 +11,11 @@ const theme = createTheme({
       main: '#FFD9BD',
     },
   },
+  typography:{
+    fontFamily:[
+      'Spectral'
+    ]
+  }
 });
 
 ReactDOM.render(

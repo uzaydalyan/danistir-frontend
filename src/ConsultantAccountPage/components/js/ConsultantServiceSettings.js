@@ -5,6 +5,7 @@ import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import {IconButton}  from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import ChipSelector from "../../../CommonComponents/js/ChipSelector";
 
 function ConsultantServiceSettings() {
 
@@ -20,7 +21,7 @@ function ConsultantServiceSettings() {
         'Virginia Andrews',
         'Kelly Snyder',
       ];
-      
+
     return (
         <div className='consultant-service-settings'>
             <h3 className="form-title">Hizmet Düzenlemeleri</h3>
@@ -28,7 +29,7 @@ function ConsultantServiceSettings() {
 
                 <div className='c-account-section-title'>Hizmetler</div>
                 <div className='c-account-services'>
-
+                <ChipSelector options={names} label={"Hizmetler"}/>
                 </div>
 
                 <div className='c-account-section-title'>Hizmet Saatleri</div>

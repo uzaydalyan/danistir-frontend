@@ -1,7 +1,9 @@
-import ChipSelector from "./ChipSelector";
+import ChipSelector from "../../../CommonComponents/js/ChipSelector";
 import '../scss/FilterBar.scss'
 import MinMaxSelector from "./MinMaxSelector";
 import DatePicker from "./DatePicker";
+import TimeRangeSelector from "./TimeRangeSelector";
+import { Button } from "@mui/material";
 
 
 function FilterBar() {
@@ -39,6 +41,12 @@ function FilterBar() {
             <div className="filter-bar-seperator"></div>
             <div className="filter-bar-title">Aranan Gün</div>
             <ChipSelector options={days} label={"Gün"}/>
+            <div className="filter-bar-seperator"></div>
+            <div className="filter-bar-title">Aranan Saat Aralığı</div>
+            <TimeRangeSelector />
+            <div className="filter-bar-vertical-margin"></div>
+            <Button variant="contained" size="small">Uygula</Button>
+            
         </div>
      );
 }
