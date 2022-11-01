@@ -3,12 +3,28 @@ import '../scss/ConsultantServiceSettings.scss'
 import { Checkbox } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
-import {IconButton}  from '@mui/material';
+import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ChipSelector from "../../../CommonComponents/js/ChipSelector";
+import { useState, useEffect, useRef } from 'react';
 
 function ConsultantServiceSettings() {
 
+    const [weekDayHourCount, setWeekDayHourCount] = useState([1, 1, 1, 1, 1, 1, 1])
+
+    const hours = [
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+        '08:00',
+    ]
     const names = [
         'Oliver Hansen',
         'Van Henry',
@@ -20,7 +36,7 @@ function ConsultantServiceSettings() {
         'Bradley Wilkerson',
         'Virginia Andrews',
         'Kelly Snyder',
-      ];
+    ];
 
     return (
         <div className='consultant-service-settings'>
@@ -29,7 +45,7 @@ function ConsultantServiceSettings() {
 
                 <div className='c-account-section-title'>Hizmetler</div>
                 <div className='c-account-services'>
-                <ChipSelector options={names} label={"Hizmetler"}/>
+                    <ChipSelector options={names} label={"Hizmetler"} />
                 </div>
 
                 <div className='c-account-section-title'>Hizmet Saatleri</div>
@@ -41,69 +57,57 @@ function ConsultantServiceSettings() {
                         <div className='c-account-service-option-section'>
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
 
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
                         </div>
@@ -120,35 +124,29 @@ function ConsultantServiceSettings() {
                         <div className='c-account-service-option-section'>
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
                         </div>
@@ -165,35 +163,29 @@ function ConsultantServiceSettings() {
                         <div className='c-account-service-option-section'>
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
                         </div>
@@ -210,35 +202,29 @@ function ConsultantServiceSettings() {
                         <div className='c-account-service-option-section'>
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
                         </div>
@@ -255,35 +241,29 @@ function ConsultantServiceSettings() {
                         <div className='c-account-service-option-section'>
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
                         </div>
@@ -300,35 +280,29 @@ function ConsultantServiceSettings() {
                         <div className='c-account-service-option-section'>
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
                         </div>
@@ -345,35 +319,29 @@ function ConsultantServiceSettings() {
                         <div className='c-account-service-option-section'>
                             <div className='c-account-service-option-section-row'>
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
 
                                 <div className='c-account-horizontal-seperator'></div>
 
                                 <Select
-                                    defaultValue={8}
+                                    defaultValue={'08:00'}
                                     label="Start"
                                 >
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
-                                    <MenuItem value={8}>08:00</MenuItem>
+                                    {hours.map((hour, index) => {
+
+                                        return (
+                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </div>
                         </div>

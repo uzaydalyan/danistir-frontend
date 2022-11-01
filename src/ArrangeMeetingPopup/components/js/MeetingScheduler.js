@@ -11,14 +11,19 @@ export default function MeetingScheduler() {
     };
   });
 
+  const onSelect = (startTimeEventEmit) => {
+
+    console.log(startTimeEventEmit)
+  }
+
   return (
     <ScheduleMeeting
       borderRadius={10}
       format_startTimeFormatString={"HH:mm"}
-      primaryColor="#3f5b85"
+      primaryColor="#ffe6cc"
       eventDurationInMinutes={30}
       availableTimeslots={availableTimeslots}
-      onStartTimeSelect={console.log}
+      onStartTimeSelect={(startTimeEventEmit) => onSelect(startTimeEventEmit)}
     />
   );
 }

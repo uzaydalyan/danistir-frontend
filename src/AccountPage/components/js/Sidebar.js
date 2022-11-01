@@ -57,7 +57,6 @@ export default function Sidebar() {
                 variant="scrollable"
                 value={value}
                 onChange={handleChange}
-                aria-label="Vertical tabs example"
                 sx={{ borderRight: 1, borderColor: 'divider' }}
             >
                 <Tab label="Hesap Bilgileri" {...a11yProps(0)} />
