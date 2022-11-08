@@ -9,9 +9,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Button } from '@mui/material';
 import { useState } from 'react';
-import { useCookies } from 'react-cookie'
-
-
+import { useCookies } from 'react-cookie';
+import { loginUser } from '../../../services/services';
 
 function Login(props) {
 
@@ -22,6 +21,22 @@ function Login(props) {
     password: '',
     showPassword: false,
   });
+
+  const [isLoginValid, setIsLoginValid] = useState({
+    email: true,
+    password: true
+  });
+
+  const fieldsValid = () => {
+
+    setIsLoginValid({
+      email: values.email != '',
+      password: values.password != ''
+    })
+
+    return isLoginValid
+}
+
 
   const handleChange = (prop) => (event) => {
       setValues({ ...values, [prop]: event.target.value });
@@ -40,16 +55,9 @@ function Login(props) {
 
   const handleSubmit = () => {
 
-    fetch('http://danistir.herokuapp.com/login', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "email" : values.email,
-        "password" : values.password
-      })}).then((response) => {
+    if(fieldsValid()){
+
+      loginUser(values.email, values.password).then((response) => {
 
         if(response.status == 200){
 
@@ -67,6 +75,7 @@ function Login(props) {
         }
         
       });
+    }
   };
 
   return(
@@ -75,7 +84,7 @@ function Login(props) {
 
       <div className="title">Giriş Yap</div>
 
-      <FormControl className="text-field" sx={{ m: 1, width: '300px' }}>
+      <FormControl className="text-field" sx={{ m: 1, width: '300px' }} error={!isLoginValid.email}>
           <InputLabel>E-Posta</InputLabel>
           <Input
             type={'text'}
@@ -90,7 +99,7 @@ function Login(props) {
           />
         </FormControl>
 
-        <FormControl className="text-field" sx={{ m: 1, width: '300px' }} variant="outlined">
+        <FormControl className="text-field" sx={{ m: 1, width: '300px' }} variant="outlined" error={!isLoginValid.password}>
           <InputLabel htmlFor="outlined-adornment-password">Şifre</InputLabel>
           <Input
             id="outlined-adornment-password"

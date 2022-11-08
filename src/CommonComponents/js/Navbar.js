@@ -4,6 +4,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { useCookies } from 'react-cookie'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Login } from '@mui/icons-material';
 
 const navigation = [
   { name: 'Anasayfa', href: '/', current: true },
@@ -17,7 +18,7 @@ function classNames(...classes) {
 
 
 
-export default function Navbar() {
+export default function Navbar(props) {
 
   const [cookies, setCookie, removeCookie] = useCookies(['danistir_access_token'])
 
@@ -25,6 +26,10 @@ export default function Navbar() {
 
     removeCookie('danistir_access_token')
     window.location.href = '/login'
+  }
+
+  function hasJWT(){
+    return props.hasJWT();
   }
 
   return (
@@ -71,10 +76,13 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="ml-3 relative">
                   <div>
+                  {hasJWT() ?
                     <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
-                      <AccountCircleIcon fontSize='large' />
+                      <AccountCircleIcon fontSize='large' /> 
                     </Menu.Button>
+
+                    : <a href="/login"> <Login /></a>} 
                   </div>
                   <Transition
                     as={Fragment}

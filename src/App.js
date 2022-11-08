@@ -16,7 +16,12 @@ function App() {
   function hasJWT() {
     let flag = false;
     //check user has JWT token
-    cookies.danistir_access_token ? flag=true : flag=false
+    if(cookies.danistir_access_token){
+
+    } else{
+
+        flag = false;
+    }
    
     return flag
 }
@@ -24,14 +29,14 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar hasJWT={hasJWT}/>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<HomePage />} /> 
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/account" element={hasJWT() ?  <Account /> : <Navigate to="/login" />} /> 
           <Route exact path="/search_results" element={<SearchResults />} /> 
-          <Route exact path="/account_c" element={<ConsultantAccountPage />} /> 
+          <Route exact path="/account_c" element={hasJWT() ?  <ConsultantAccountPage /> : <Navigate to="/login" />} /> 
         </Routes>
       </BrowserRouter>
     </div>
