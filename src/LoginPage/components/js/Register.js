@@ -10,6 +10,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { registerUser } from '../../../services/services';
 
 
 function Register(props) {
@@ -21,6 +22,14 @@ function Register(props) {
     password: '',
     passwordverification: '',
     showPassword: false,
+  });
+
+  const [isFormValid, setIsFormValid] = useState({
+    name: true,
+    surname: true,
+    email: true,
+    password: true,
+    password2: true
   });
 
   const handleChange = (prop) => (event) => {
@@ -35,30 +44,30 @@ function Register(props) {
     event.preventDefault();
   };
 
+  const fieldsValid = () => {
+
+      setIsFormValid({
+        name: values.name != '',
+        surname: values.surname != '',
+        email: values.email != '',
+        password: values.password != '',
+        password2: values.passwordverification != ''
+      })
+  }
+
   const handleSubmit = () => {
+
+    if(fieldsValid())
 
     if(values.password == values.passwordverification){
 
-      fetch('http://danistir.herokuapp.com/register', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "email" : values.email,
-          "password" : values.password
-        })
-      }).then((response) => {
-
-        console.log(response);
+      registerUser(values.email, values.password).then((response) => {
 
         if(response.status == 200){
 
           alert("Registered!");
         }
         else{
-          console.log(response);
           alert("Go Away!");
         }
       })
@@ -78,7 +87,7 @@ function Register(props) {
 
       <div className="name-surname">
 
-        <FormControl className="text-field text-field-left" sx={{ m: 1, width: '142px' }}>
+        <FormControl className="text-field text-field-left" sx={{ m: 1, width: '142px' }} error={!isFormValid.name}>
           <InputLabel>İsim</InputLabel>
           <Input
             type={'text'}
@@ -93,7 +102,7 @@ function Register(props) {
           />
         </FormControl>
 
-        <FormControl className="text-field" sx={{ m: 1, width: '142px' }}>
+        <FormControl className="text-field" sx={{ m: 1, width: '142px' }} error={!isFormValid.surname}>
           <InputLabel htmlFor="">Soyİsim</InputLabel>
           <Input
             type={'text'}
@@ -111,7 +120,7 @@ function Register(props) {
 
       </div>
 
-      <FormControl className="text-field" sx={{ m: 1, width: '300px' }}>
+      <FormControl className="text-field" sx={{ m: 1, width: '300px' }} error={!isFormValid.email}>
         <InputLabel>E-Posta</InputLabel>
         <Input
           type={'text'}
@@ -126,10 +135,10 @@ function Register(props) {
         />
       </FormControl>
 
-      <FormControl className="text-field" sx={{ m: 1, width: '300px' }} variant="outlined">
+      <FormControl className="text-field" sx={{ m: 1, width: '300px' }} variant="outlined" error={!isFormValid.password}>
         <InputLabel>Şifre</InputLabel>
         <Input
-          id="outlined-adornment-password"
+          id="password"
           type={values.showPassword ? 'text' : 'password'}
           value={values.password}
           onChange={handleChange('password')}
@@ -149,7 +158,7 @@ function Register(props) {
         />
       </FormControl>
 
-      <FormControl className="text-field" sx={{ m: 1, width: '300px' }} variant="outlined">
+      <FormControl className="text-field" sx={{ m: 1, width: '300px' }} variant="outlined" error={!isFormValid.password2}>
         <InputLabel>Şifre Onayı</InputLabel>
         <Input
           id="outlined-adornment-password"

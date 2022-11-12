@@ -1,0 +1,61 @@
+@import 'variables';
+
+.consultant-service-settings{
+
+    .c-account-section-title{
+
+        font-size : 1.2rem;
+        border-bottom: 1px solid #DADADA;
+        padding-bottom: 10px;
+        padding-right: 30px;
+        margin-bottom: 30px;
+    }
+
+    .c-account-services{
+        margin-bottom: 50px;
+    }
+
+    .c-account-service-hours{
+
+        padding: 15px 20px;
+        border: 1px solid #DADADA;;
+        border-radius: 8px;
+
+        .c-account-service-row{
+
+            display: flex;
+            border-bottom: 1px solid #DADADA;
+            padding: 30px 10px;
+            align-items: center;
+
+            .c-account-service-day{
+
+                margin-left: 3px;
+                margin-right: 40px;
+            }
+
+            .c-account-service-option-section{
+
+                display: grid;
+                grid-row-gap: 10px;
+                margin-right: 60px;
+
+                .c-account-service-option-section-row{
+
+                    display: flex;
+                    align-items: center;
+
+                    .c-account-horizontal-seperator{
+
+                        width: 15px;
+                        height: 3px;
+                        background-color: #DADADA;
+                        margin: 0px 15px;
+                    }
+                }
+            }
+
+            
+        }
+    }
+}

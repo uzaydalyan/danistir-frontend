@@ -1,0 +1,19 @@
+.schedule-text-fields {
+
+    display: grid;
+    grid-row-gap: 15px;
+
+    .text-field-title {
+
+        margin-top: 20px;
+        font-family: Spectral;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    .MuiFormControl-root {
+        margin: 0 !important;
+    }
+}
