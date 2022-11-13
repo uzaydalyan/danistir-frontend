@@ -1,6 +1,12 @@
 import './VideoCallPage.scss'
-import ReactPlayer from 'react-player';
+import io from 'socket.io-client'
 import { useState, useEffect, useRef } from 'react';
+
+
+const socket = io('/webRTCPeers', {
+
+    path:'/webrtc'
+})
 
 function VideoCallPage() {
 
@@ -16,12 +22,28 @@ function VideoCallPage() {
     const remoteVideoRef = useRef()
     const pc = useRef(new RTCPeerConnection())
     const textRef = useRef()
+    const candidates = useRef([])
 
     let [remoteStream, setRemoteStream] = useState(new MediaStream())
     let [peerConnection, setPeerConnection] = useState(new RTCPeerConnection(servers))
         
 
     useEffect(() => {
+
+        socket.on('connection-success', success => {
+
+            console.log(success)
+        })
+
+        socket.on('sdp', data => {
+            console.log(data)
+            textRef.current.value = JSON.stringify(data.sdp) 
+        })
+
+        socket.on('candidate', candidate => {
+            console.log(candidate)
+            candidates.current = [...candidates.current, candidate]
+        })
         
         navigator.mediaDevices.getUserMedia({video:true, audio:false})
         .then(stream => {
@@ -38,7 +60,7 @@ function VideoCallPage() {
         const _pc = new RTCPeerConnection(null)
         _pc.onicecandidate = (e) => {
             if(e.candidate){
-                console.log(JSON.stringify(e.candidate))
+                socket.emit('candidate', e.candidate)
             }
         }
 
@@ -62,6 +84,11 @@ function VideoCallPage() {
         }).then(sdp => {
             console.log(JSON.stringify(sdp))
             pc.current.setLocalDescription(sdp)
+
+            // send sdp to socket
+            socket.emit('sdp', {
+                sdp
+            })
         }).catch(e => {
             console.log(e)
         })
@@ -74,6 +101,11 @@ function VideoCallPage() {
         }).then(sdp => {
             console.log(JSON.stringify(sdp))
             pc.current.setLocalDescription(sdp)
+
+            // send answer sdp to socket
+            socket.emit('sdp', {
+                sdp
+            })
         }).catch(e => {
             console.log(e)
         })
@@ -89,9 +121,10 @@ function VideoCallPage() {
 
     const addCandidate = () => {
 
-        const candidate = JSON.parse(textRef.current.value)
-        console.log('Adding Candidate...', candidate)
-        pc.current.addIceCandidate(new RTCIceCandidate(candidate))
+        candidates.current.forEach(candidate => {
+
+            pc.current.addIceCandidate(new RTCIceCandidate(candidate))
+        })
     }
     
     return (  
