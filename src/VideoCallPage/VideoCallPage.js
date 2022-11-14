@@ -1,3 +1,4 @@
+import * as React from 'react'
 import './VideoCallPage.scss'
 import io from 'socket.io-client'
 import { useState, useEffect, useRef } from 'react';

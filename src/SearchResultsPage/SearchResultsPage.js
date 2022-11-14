@@ -1,3 +1,4 @@
+import * as React from 'react';
 import './SearchResultsPage.scss';
 import ResultCard from './components/js/ResultCard';
 import FilterBar from './components/js/FilterBar';
