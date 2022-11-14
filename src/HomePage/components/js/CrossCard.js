@@ -1,3 +1,4 @@
+import React from 'react';
 import { cardActionAreaClasses } from '@mui/material';
 import '../scss/CrossCard.scss';
 import $ from 'jquery';

@@ -1,4 +1,4 @@
-/* This example requires Tailwind CSS v2.0+ */
+import React from 'react';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'

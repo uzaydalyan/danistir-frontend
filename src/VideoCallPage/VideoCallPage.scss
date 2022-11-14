@@ -1,0 +1,18 @@
+@import 'variables';
+
+.video-call-page{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em;
+    grid-column: 1 / 4;
+    width: $desktop-width;
+    justify-self: center;
+    justify-content: center;
+
+    .video-player{
+
+        background-color: black;
+        width: 100%;
+    }
+}

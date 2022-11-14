@@ -1,3 +1,4 @@
+import React from 'react';
 import './LoginPage.scss'
 import Login from './components/js/Login';
 import Register from './components/js/Register';

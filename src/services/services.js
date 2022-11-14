@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://danistir.herokuapp.com/";
+const baseUrl = "https://danistir.herokuapp.com/";
 
 export const registerUser = (email, password) => {
 

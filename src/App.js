@@ -1,4 +1,5 @@
 import './App.scss';
+import * as React from 'react';
 import { BrowserRouter, Routes, Navigate, Route} from "react-router-dom";
 import LoginPage from './LoginPage/LoginPage';
 import Navbar from './CommonComponents/js/Navbar'
@@ -7,6 +8,7 @@ import { useCookies } from 'react-cookie'
 import HomePage from './HomePage/HomePage';
 import SearchResults from './SearchResultsPage/SearchResultsPage';
 import ConsultantAccountPage from './ConsultantAccountPage/ConsultantAccountPage';
+import VideoCallPage from './VideoCallPage/VideoCallPage';
 
 
 function App() {
@@ -36,7 +38,8 @@ function App() {
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/account" element={hasJWT() ?  <Account /> : <Navigate to="/login" />} /> 
           <Route exact path="/search_results" element={<SearchResults />} /> 
-          <Route exact path="/account_c" element={hasJWT() ?  <ConsultantAccountPage /> : <Navigate to="/login" />} /> 
+          <Route exact path="/account_c" element={hasJWT() ?  <ConsultantAccountPage /> : <Navigate to="/login" />} />
+          <Route exact path="/video" element={<VideoCallPage />} /> 
         </Routes>
       </BrowserRouter>
     </div>
