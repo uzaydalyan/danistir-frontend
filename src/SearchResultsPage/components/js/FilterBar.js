@@ -1,3 +1,4 @@
+import React from 'react';
 import ChipSelector from "../../../CommonComponents/js/ChipSelector";
 import '../scss/FilterBar.scss'
 import MinMaxSelector from "./MinMaxSelector";
