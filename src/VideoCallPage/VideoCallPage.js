@@ -10,23 +10,14 @@ const socket = io('/webRTCPeers', {
 
 function VideoCallPage() {
 
-    const servers = {
-        iceServers:[
-        {
-            urls:["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"]
-        }    
-        ]
-    }
-
     const localVideoRef = useRef()
     const remoteVideoRef = useRef()
     const pc = useRef(new RTCPeerConnection())
     const textRef = useRef()
-    const candidates = useRef([])
 
-    let [remoteStream, setRemoteStream] = useState(new MediaStream())
-    let [peerConnection, setPeerConnection] = useState(new RTCPeerConnection(servers))
-        
+    const [callVisible, setCallVisible] = useState(true)
+    const [answerVisible, setAnswerVisible] = useState(false)
+    const [status, setStatus] = useState('Make a call now')
 
     useEffect(() => {
 
@@ -38,11 +29,22 @@ function VideoCallPage() {
         socket.on('sdp', data => {
             console.log(data)
             textRef.current.value = JSON.stringify(data.sdp) 
+            pc.current.setRemoteDescription(new RTCSessionDescription(data.sdp))
+
+            if(data.sdp.type === "offer"){
+                setCallVisible(false)
+                setAnswerVisible(true)
+                setStatus('Incoming Call...')
+            } else {
+
+                setStatus('Call established.')
+            }
         })
 
         socket.on('candidate', candidate => {
             console.log(candidate)
-            candidates.current = [...candidates.current, candidate]
+            //candidates.current = [...candidates.current, candidate]
+            pc.current.addIceCandidate(new RTCIceCandidate(candidate))
         })
         
         navigator.mediaDevices.getUserMedia({video:true, audio:false})
@@ -60,7 +62,7 @@ function VideoCallPage() {
         const _pc = new RTCPeerConnection(null)
         _pc.onicecandidate = (e) => {
             if(e.candidate){
-                socket.emit('candidate', e.candidate)
+                sendToPeer('candidate', e.candidate)
             }
         }
 
@@ -76,19 +78,29 @@ function VideoCallPage() {
         pc.current = _pc
     }, [])
 
+    const sendToPeer = (eventType, payload) => {
+
+        socket.emit(eventType, payload)
+    }
+
+    const processSDP = (sdp) => {
+
+        console.log(JSON.stringify(sdp))
+        pc.current.setLocalDescription(sdp)
+        sendToPeer('sdp', {sdp})
+    }
+
     const createOffer = () => {
 
         pc.current.createOffer({
             offerToReceiveAudio: 1,
             offerToReceiveVideo: 1
         }).then(sdp => {
-            console.log(JSON.stringify(sdp))
-            pc.current.setLocalDescription(sdp)
-
-            // send sdp to socket
-            socket.emit('sdp', {
-                sdp
-            })
+            
+            processSDP(sdp)
+            setCallVisible(false)
+            setStatus('Calling...')
+            
         }).catch(e => {
             console.log(e)
         })
@@ -99,45 +111,27 @@ function VideoCallPage() {
             offerToReceiveAudio: 1,
             offerToReceiveVideo: 1
         }).then(sdp => {
-            console.log(JSON.stringify(sdp))
-            pc.current.setLocalDescription(sdp)
-
-            // send answer sdp to socket
-            socket.emit('sdp', {
-                sdp
-            })
+            processSDP(sdp)
+            setAnswerVisible(false)
+            setStatus('Call established.')
         }).catch(e => {
             console.log(e)
         })
 
     }
 
-    const setRemoteDescription = () => {
 
-        const sdp = JSON.parse(textRef.current.value)
-        console.log(sdp)
-        pc.current.setRemoteDescription(new RTCSessionDescription(sdp))
-    }
 
-    const addCandidate = () => {
-
-        candidates.current.forEach(candidate => {
-
-            pc.current.addIceCandidate(new RTCIceCandidate(candidate))
-        })
-    }
-    
     return (  
         <div className="video-call-page">
             <video width={"100%"} height={"100%"} className="video-player" id="player1" ref={localVideoRef} autoPlay/>
             <video width={"100%"} height={"100%"} className="video-player" id="player2" ref={remoteVideoRef} autoPlay/>
-            <button onClick={createOffer}>Create Offer</button>
-            <button onClick={createAnswer}>Create Answer</button>
+            {callVisible && <button onClick={createOffer}>Call</button>}
+            {answerVisible && <button onClick={createAnswer}>Answer</button>} 
             <br />
+            <div>{status}</div>
             <textarea ref={textRef}></textarea>
             <br />
-            <button onClick={setRemoteDescription}>Set Remote Description</button>
-            <button onClick={addCandidate}>Add Candidates</button>
         </div>
     );
 }
