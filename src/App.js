@@ -1,4 +1,5 @@
 import './App.scss';
+import * as React from 'react';
 import { BrowserRouter, Routes, Navigate, Route} from "react-router-dom";
 import LoginPage from './LoginPage/LoginPage';
 import Navbar from './CommonComponents/js/Navbar'
