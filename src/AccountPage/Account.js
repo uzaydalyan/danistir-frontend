@@ -1,7 +1,7 @@
 import './Account.scss'
 import Sidebar from './components/js/Sidebar';
 import { useState, useEffect, useRef } from 'react';
-import $ from 'jquery';
+import * as React from 'react';
 
 
 function Account(/*props: props*/) {
