@@ -4,6 +4,7 @@ import Login from './components/js/Login';
 import Register from './components/js/Register';
 import { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
+import { useCookies } from 'react-cookie';
 
 /*interface props{
 
@@ -13,6 +14,7 @@ import $ from 'jquery';
 
 function LoginPage(/*props: props*/) {
 
+  const [cookies, setCookie] = useCookies(['access_token'])
   const [bannerSide, setBannerSide] = useState('left');
   const isMounted = useRef(false);
 
@@ -76,8 +78,8 @@ function LoginPage(/*props: props*/) {
 
     <div className="login-page">
 
-      <Register handleBanner={handleBanner} />
-      <Login handleBanner={handleBanner} />
+      <Register handleBanner={handleBanner} setCookie={setCookie}/>
+      <Login handleBanner={handleBanner} setCookie={setCookie}/>
       <div className="banner"><div className="banner-text">Bir an önce danışmanınızla görüşmek için giriş yapın! </div></div>
     </div>
   );

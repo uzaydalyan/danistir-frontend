@@ -15,7 +15,7 @@ import { loginUser } from '../../../services/services';
 
 function Login(props) {
 
-  const [cookies, setCookie] = useCookies(['access_token'])
+  
 
   const [values, setValues] = useState({
     email: '',
@@ -65,13 +65,12 @@ function Login(props) {
           return response.json();
         }
         else{
-          alert("Go Away!");
+          alert("Wrong username or password!");
           return null
         }
       }).then(function(data) {
         if(data != null){
-          console.log(data.access_token);
-          setCookie("danistir_access_token", data.access_token, {path: "/"});
+          props.setCookie("danistir_access_token", data.access_token, {path: "/"});
           window.location.href = '/';
         }
         

@@ -1,0 +1,77 @@
+
+Login:
+
+Request:
+{
+    "email": "uzay@gmail.com",
+    "password": "123"
+}
+
+Response
+{
+    "access_token": "dsadsafgasdkj",
+    "message": "Login succeeded!"
+}
+
+Register:
+
+Request:
+{
+    "email": "uzay@gmail.com",
+    "password": "123"
+}
+
+Response
+{
+    "access_token": "dsadsafgasdkj",
+    "message": "Register succeeded!"
+
+}
+
+Profile:
+
+Request
+{
+    "access_token": "dsadsafgasdkj"
+}
+
+Response
+{
+    "address": "Şişli/İstanbul",
+    "consultant_info": {
+        "average_rating": 0.0,
+        "biography": "danışam biosu",
+        "consultant": 1,
+        "consultant_info_id": 10,
+        "total_review": 0 
+    },
+    "email": "ahmet@gmail.com",
+    "first_name": "ahmet",
+    "last_name": "polat",
+    "image_url": "https:://dsadashksajfkj.com",
+    "is_active": true,
+    "is_admin": false,
+    "is_consultant": true,
+    "user_id": 1
+}
+
+
+Search:
+
+Request
+{
+    "word": "psikolog"
+}
+
+Response
+{
+    [
+        {
+            "consultantId": 1,
+            "consultantName": "Uzay Dalyan",
+            "consultantRating": 4.5,
+            "consultantFields": "Psikoterapi, öğretmen, su tesisatçısı"
+            "availableTimes":
+        }
+    ]
+}
