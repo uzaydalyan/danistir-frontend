@@ -67,17 +67,18 @@ function Register(props) {
         if(response.status == 200){
 
           alert("Registered!");
+          if(response.data.access_token != null){
+            props.setCookie("danistir_access_token", response.data.access_token, {path: "/"});
+            window.location.href = '/';
+          }
         }
         else{
-          alert("Go Away!");
+          alert("Register failed!");
         }
       })
     } else {
-
         alert("Passwords are different!");
     }
-
-    
   };
 
 
