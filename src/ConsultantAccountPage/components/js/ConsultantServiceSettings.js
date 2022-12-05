@@ -6,6 +6,7 @@ import { MenuItem } from '@mui/material';
 import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ChipSelector from "../../../CommonComponents/js/ChipSelector";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState, useEffect, useRef } from 'react';
 
 const hours = [
@@ -39,7 +40,7 @@ function ConsultantServiceSettings() {
 
 
 
-    const [weekDayHours, setWeekDayHours] = useState([[{ start: "08:00", end: "09:00" }, { start: "08:00", end: "09:00" }], [{ start: "08:00", end: "09:00" }], [{ start: "08:00", end: "09:00" }], [{ start: "08:00", end: "09:00" }], [{ start: "08:00", end: "09:00" }], [{ start: "08:00", end: "09:00" }], [{ start: "08:00", end: "09:00" }],])
+    const [weekDayHours, setWeekDayHours] = useState([{ day: 0, startHour: 8, startMin: 0, endHour: 9, endMin: 0 }, { day: 0, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 1, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 2, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 3, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 4, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 5, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 6, startHour: 10, startMin: 0, endHour: 13, endMin: 0 },])
     const [allHoursArray, setAllHoursArray] = useState([[], [], [], [], [], [], []])
     const [serviceTimes, setServiceTimes] = useState([])
     const [serviceDayList, setServiceDayList] = useState([])
@@ -50,29 +51,35 @@ function ConsultantServiceSettings() {
         return parseInt(numberAsString)
     }
 
-    function convertHourToString(hour) {
+    function convertTimeToString(hour, min) {
+        if (hour == null || min == null) {
+            return ""
+        }
         hour = hour.toString()
         if (hour.length == 1) {
             hour = "0" + hour
         }
-        let hourAsString = hour + ":00"
-        return hourAsString
+        min = min.toString()
+        if (min.length == 1) {
+            min = "0" + min
+        }
+        let timeAsString = hour + ":" + min
+        return timeAsString
     }
 
 
     function addNewRange(dayIndex) {
         let tmpArray = [...weekDayHours]
-        console.log("you clicked")
 
-        tmpArray.map((day, index) => {
-            if (index == dayIndex) {
-                let lastRange = day[day.length - 1]
-                let newStart = lastRange.end
-                let newEnd = convertHourToString((convertHourToInt(newStart) + 1))
-                day.push({ start: lastRange.end, end: newEnd })
-            }
-        })
+        tmpArray.push({ day: dayIndex, startHour: null, startMin: null, endHour: null, endMin: null })
+
         setWeekDayHours(tmpArray)
+    }
+
+    function deleteRange(rangeIndex){
+
+        let tmpArray = [...weekDayHours]
+        setWeekDayHours(tmpArray.filter((range, index) => index != rangeIndex))
     }
 
 
@@ -102,42 +109,51 @@ function ConsultantServiceSettings() {
                 <div className='c-account-section-title'>Hizmet Saatleri</div>
                 <div className='c-account-service-hours'>
                     <div className='c-account-service-row'>
-                        <Checkbox defaultChecked />
                         <div className='c-account-service-day'>Pazartesi</div>
 
                         <div className='c-account-service-option-section'>
 
                             {
-                                weekDayHours[0].map((range, index) => {
-                                    console.log(range.start + range.end)
-                                    return (
-                                        <div className='c-account-service-option-section-row'>
-                                            <Select
-                                                defaultValue={range.start}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                weekDayHours.map((range, index) => {
+                                    if (range.day == 0) {
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                            <div className='c-account-horizontal-seperator'></div>
+                                        return (
+                                            <div className='c-account-service-option-section-row'>
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.startHour, range.startMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
 
-                                            <Select
-                                                defaultValue={range.end}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <div className='c-account-horizontal-seperator'></div>
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </div>
-                                    );
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.endHour, range.endMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
+
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <IconButton
+                                                    size='small'
+                                                    onClick={() => {
+                                                        deleteRange(index)
+                                                    }}>
+                                                    <RemoveCircleOutlineIcon />
+                                                </IconButton>
+                                            </div>
+                                        );
+                                    }
+
                                 })
                             }
 
@@ -153,41 +169,50 @@ function ConsultantServiceSettings() {
                     </div>
 
                     <div className='c-account-service-row'>
-                        <Checkbox defaultChecked />
                         <div className='c-account-service-day'>Salı</div>
 
                         <div className='c-account-service-option-section'>
                             {
-                                weekDayHours[1].map((range, index) => {
-                                    console.log(range.start + range.end)
-                                    return (
-                                        <div className='c-account-service-option-section-row'>
-                                            <Select
-                                                defaultValue={range.start}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                weekDayHours.map((range, index) => {
+                                    if (range.day == 1) {
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                            <div className='c-account-horizontal-seperator'></div>
+                                        return (
+                                            <div className='c-account-service-option-section-row'>
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.startHour, range.startMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
 
-                                            <Select
-                                                defaultValue={range.end}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <div className='c-account-horizontal-seperator'></div>
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </div>
-                                    );
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.endHour, range.endMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
+
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <IconButton
+                                                    size='small'
+                                                    onClick={() => {
+                                                        deleteRange(index)
+                                                    }}>
+                                                    <RemoveCircleOutlineIcon />
+                                                </IconButton>
+                                            </div>
+                                        );
+                                    }
+
                                 })
                             }
                         </div>
@@ -201,41 +226,50 @@ function ConsultantServiceSettings() {
                     </div>
 
                     <div className='c-account-service-row'>
-                        <Checkbox defaultChecked />
                         <div className='c-account-service-day'>Çarşamba</div>
 
                         <div className='c-account-service-option-section'>
                             {
-                                weekDayHours[2].map((range, index) => {
-                                    console.log(range.start + range.end)
-                                    return (
-                                        <div className='c-account-service-option-section-row'>
-                                            <Select
-                                                defaultValue={range.start}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                weekDayHours.map((range, index) => {
+                                    if (range.day == 2) {
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                            <div className='c-account-horizontal-seperator'></div>
+                                        return (
+                                            <div className='c-account-service-option-section-row'>
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.startHour, range.startMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
 
-                                            <Select
-                                                defaultValue={range.end}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <div className='c-account-horizontal-seperator'></div>
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </div>
-                                    );
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.endHour, range.endMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
+
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <IconButton
+                                                    size='small'
+                                                    onClick={() => {
+                                                        deleteRange(index)
+                                                    }}>
+                                                    <RemoveCircleOutlineIcon />
+                                                </IconButton>
+                                            </div>
+                                        );
+                                    }
+
                                 })
                             }
                         </div>
@@ -249,41 +283,50 @@ function ConsultantServiceSettings() {
                     </div>
 
                     <div className='c-account-service-row'>
-                        <Checkbox defaultChecked />
                         <div className='c-account-service-day'>Perşembe</div>
 
                         <div className='c-account-service-option-section'>
                             {
-                                weekDayHours[3].map((range, index) => {
-                                    console.log(range.start + range.end)
-                                    return (
-                                        <div className='c-account-service-option-section-row'>
-                                            <Select
-                                                defaultValue={range.start}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                weekDayHours.map((range, index) => {
+                                    if (range.day == 3) {
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                            <div className='c-account-horizontal-seperator'></div>
+                                        return (
+                                            <div className='c-account-service-option-section-row'>
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.startHour, range.startMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
 
-                                            <Select
-                                                defaultValue={range.end}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <div className='c-account-horizontal-seperator'></div>
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </div>
-                                    );
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.endHour, range.endMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
+
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <IconButton
+                                                    size='small'
+                                                    onClick={() => {
+                                                        deleteRange(index)
+                                                    }}>
+                                                    <RemoveCircleOutlineIcon />
+                                                </IconButton>
+                                            </div>
+                                        );
+                                    }
+
                                 })
                             }
                         </div>
@@ -297,43 +340,53 @@ function ConsultantServiceSettings() {
                     </div>
 
                     <div className='c-account-service-row'>
-                        <Checkbox defaultChecked />
                         <div className='c-account-service-day'>Cuma</div>
 
                         <div className='c-account-service-option-section'>
                             {
-                                weekDayHours[4].map((range, index) => {
-                                    console.log(range.start + range.end)
-                                    return (
-                                        <div className='c-account-service-option-section-row'>
-                                            <Select
-                                                defaultValue={range.start}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                weekDayHours.map((range, index) => {
+                                    if (range.day == 4) {
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                            <div className='c-account-horizontal-seperator'></div>
+                                        return (
+                                            <div className='c-account-service-option-section-row'>
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.startHour, range.startMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
 
-                                            <Select
-                                                defaultValue={range.end}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <div className='c-account-horizontal-seperator'></div>
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </div>
-                                    );
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.endHour, range.endMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
+
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <IconButton
+                                                    size='small'
+                                                    onClick={() => {
+                                                        deleteRange(index)
+                                                    }}>
+                                                    <RemoveCircleOutlineIcon />
+                                                </IconButton>
+                                            </div>
+                                        );
+                                    }
+
                                 })
                             }
+
                         </div>
 
                         <IconButton
@@ -345,41 +398,50 @@ function ConsultantServiceSettings() {
                     </div>
 
                     <div className='c-account-service-row'>
-                        <Checkbox defaultChecked />
                         <div className='c-account-service-day'>Cumartesi</div>
 
                         <div className='c-account-service-option-section'>
                             {
-                                weekDayHours[5].map((range, index) => {
-                                    console.log(range.start + range.end)
-                                    return (
-                                        <div className='c-account-service-option-section-row'>
-                                            <Select
-                                                defaultValue={range.start}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                weekDayHours.map((range, index) => {
+                                    if (range.day == 5) {
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                            <div className='c-account-horizontal-seperator'></div>
+                                        return (
+                                            <div className='c-account-service-option-section-row'>
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.startHour, range.startMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
 
-                                            <Select
-                                                defaultValue={range.end}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <div className='c-account-horizontal-seperator'></div>
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </div>
-                                    );
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.endHour, range.endMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
+
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <IconButton
+                                                    size='small'
+                                                    onClick={() => {
+                                                        deleteRange(index)
+                                                    }}>
+                                                    <RemoveCircleOutlineIcon />
+                                                </IconButton>
+                                            </div>
+                                        );
+                                    }
+
                                 })
                             }
                         </div>
@@ -393,41 +455,50 @@ function ConsultantServiceSettings() {
                     </div>
 
                     <div className='c-account-service-row'>
-                        <Checkbox defaultChecked />
                         <div className='c-account-service-day'>Pazar</div>
 
                         <div className='c-account-service-option-section'>
                             {
-                                weekDayHours[6].map((range, index) => {
-                                    console.log(range.start + range.end)
-                                    return (
-                                        <div className='c-account-service-option-section-row'>
-                                            <Select
-                                                defaultValue={range.start}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                weekDayHours.map((range, index) => {
+                                    if (range.day == 6) {
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                            <div className='c-account-horizontal-seperator'></div>
+                                        return (
+                                            <div className='c-account-service-option-section-row'>
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.startHour, range.startMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
 
-                                            <Select
-                                                defaultValue={range.end}
-                                                label="Start"
-                                            >
-                                                {hours.map((hour, index) => {
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <div className='c-account-horizontal-seperator'></div>
 
-                                                    return (
-                                                        <MenuItem value={hour}>{hour}</MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </div>
-                                    );
+                                                <Select
+                                                    defaultValue={convertTimeToString(range.endHour, range.endMin)}
+                                                    label="Start"
+                                                >
+                                                    {hours.map((hour, index) => {
+
+                                                        return (
+                                                            <MenuItem value={hour}>{hour}</MenuItem>
+                                                        );
+                                                    })}
+                                                </Select>
+                                                <IconButton
+                                                    size='small'
+                                                    onClick={() => {
+                                                        deleteRange(index)
+                                                    }}>
+                                                    <RemoveCircleOutlineIcon />
+                                                </IconButton>
+                                            </div>
+                                        );
+                                    }
+
                                 })
                             }
                         </div>
