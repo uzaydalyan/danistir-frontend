@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://danistir.herokuapp.com/";
+const baseUrl = "https://danistir-lake.vercel.app/";
 
 export const registerUser = (email, password) => {
 

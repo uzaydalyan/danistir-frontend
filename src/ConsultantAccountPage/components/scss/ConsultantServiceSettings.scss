@@ -23,15 +23,15 @@
 
         .c-account-service-row{
 
-            display: flex;
+            display: grid;
+            grid-template-columns: 70px 210px 42px;
             border-bottom: 1px solid #DADADA;
             padding: 30px 10px;
+            grid-column-gap: 40px;
             align-items: center;
 
             .c-account-service-day{
 
-                margin-left: 3px;
-                margin-right: 40px;
             }
 
             .c-account-service-option-section{
@@ -57,5 +57,11 @@
 
             
         }
+    }
+
+    .c-account-service-save-button{
+
+        justify-self: end;
+        margin-top: 40px;
     }
 }
