@@ -43,9 +43,6 @@ function ConsultantServiceSettings() {
     const [cookies, setCookie] = useCookies(['access_token'])
 
     const [weekDayHours, setWeekDayHours] = useState([{ day: 0, startHour: 8, startMin: 0, endHour: 9, endMin: 0 }, { day: 0, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 1, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 2, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 3, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 4, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 5, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 6, startHour: 10, startMin: 0, endHour: 13, endMin: 0 },])
-    const [allHoursArray, setAllHoursArray] = useState([[], [], [], [], [], [], []])
-    const [serviceTimes, setServiceTimes] = useState([])
-    const [serviceDayList, setServiceDayList] = useState([])
 
     function getHourFromTime(time) {
 

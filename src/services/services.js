@@ -4,11 +4,14 @@ const baseUrl = "https://danistir.pythonanywhere.com/";
 
 //{headers: {"Authorization" : `Bearer ${token}`}},
 
-export const registerUser = (email, password) => {
+export const registerUser = (values) => {
 
     return axios.post(baseUrl + "register", {
-        email : email,
-        password : password
+        email : values.email,
+        password : values.password,
+        name: values.name,
+        surname: values.surname,
+        isConsultant: values.isConsultant
     })
 }
 

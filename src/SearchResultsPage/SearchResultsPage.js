@@ -3,9 +3,11 @@ import './SearchResultsPage.scss';
 import ResultCard from './components/js/ResultCard';
 import FilterBar from './components/js/FilterBar';
 
-function SearchResults(/*props: props*/) {
+function SearchResults(props) {
 
- 
+  const consultantList = props.consultantList
+
+  
 
   return (
 
@@ -14,13 +16,12 @@ function SearchResults(/*props: props*/) {
         <FilterBar />
         <div className='search-results-seperator'></div>
         <div className='search-results-list'>
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
+
+        {consultantList && consultantList.map((consultant) => {
+
+            return (<ResultCard consultant={consultant} />)
+        })}
+
         </div>
         
 

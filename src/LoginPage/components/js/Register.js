@@ -76,7 +76,7 @@ function Register(props) {
       console.log("fields valid")
       if (values.password == values.passwordverification) {
         console.log("password ok")
-        registerUser(values.email, values.password).then((response) => {
+        registerUser(values).then((response) => {
           console.log("rregister called")
           if (response.status == 200 || response == 201) {
 
