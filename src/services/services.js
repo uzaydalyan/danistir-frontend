@@ -31,3 +31,12 @@ export const setConsultantWorkTimes = (time, token) => {
 
     return axios.post(baseUrl + "consultantworktime",{time : time}, {headers: headers})
 }
+
+export const getConsultantWorkTimes = (token) => {
+
+    const headers = {"Authorization" : `Bearer ${token}`,
+                     "Content-Type": "application/json"
+    }
+
+    return axios.get(baseUrl + "consultantworktime", {headers: headers})
+}

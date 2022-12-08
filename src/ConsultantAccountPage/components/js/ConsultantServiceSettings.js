@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ChipSelector from "../../../CommonComponents/js/ChipSelector";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState, useEffect, useRef } from 'react';
-import { setConsultantWorkTimes } from '../../../services/services';
+import { setConsultantWorkTimes, getConsultantWorkTimes } from '../../../services/services';
 import { useCookies } from 'react-cookie';
 
 const hours = [
@@ -42,7 +42,7 @@ function ConsultantServiceSettings() {
 
     const [cookies, setCookie] = useCookies(['access_token'])
 
-    const [weekDayHours, setWeekDayHours] = useState([{ day: 0, startHour: 8, startMin: 0, endHour: 9, endMin: 0 }, { day: 0, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 1, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 2, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 3, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 4, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 5, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 6, startHour: 10, startMin: 0, endHour: 13, endMin: 0 },])
+    const [weekDayHours, setWeekDayHours] = useState([{ day: 0, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 1, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 2, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 3, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 4, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 5, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 6, startHour: null, startMin: null, endHour: null, endMin: null },])
 
     function getHourFromTime(time) {
 
@@ -112,10 +112,25 @@ function ConsultantServiceSettings() {
         console.log(weekDayHours)
 
         setConsultantWorkTimes(weekDayHours, cookies.danistir_access_token).then((response) => {
-
-            console.log(response)
+            if(response.status == 201){
+                alert("Your service hours saved successfully!")
+            } else{
+                console.log(response.statusText)
+            }
         })
     }
+
+    useEffect(() => {
+        
+        getConsultantWorkTimes().then((response) => {
+
+            if(response.data.time != null){
+                setWeekDayHours(response.data.time)
+            } else {
+                console.log(response.statusText)
+            }
+        })
+    }, [])
 
     const names = [
         'Oliver Hansen',
