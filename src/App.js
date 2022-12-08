@@ -19,7 +19,7 @@ function App() {
     let flag = false;
     //check user has JWT token
     if(cookies.danistir_access_token){
-
+      flag = true
     } else{
 
         flag = false;
@@ -38,7 +38,7 @@ function App() {
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/account" element={hasJWT() ?  <Account /> : <Navigate to="/login" />} /> 
           <Route exact path="/search_results" element={<SearchResults />} /> 
-          <Route exact path="/account_c" element={hasJWT() ?  <ConsultantAccountPage /> : <Navigate to="/login" />} />
+          <Route exact path="/account_c" element={hasJWT() ?  <ConsultantAccountPage/> : <Navigate to="/login" />}/>
           <Route exact path="/video" element={<VideoCallPage />} /> 
         </Routes>
       </BrowserRouter>

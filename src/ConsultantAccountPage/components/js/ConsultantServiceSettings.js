@@ -8,6 +8,8 @@ import AddIcon from '@mui/icons-material/Add';
 import ChipSelector from "../../../CommonComponents/js/ChipSelector";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState, useEffect, useRef } from 'react';
+import { setConsultantWorkTimes } from '../../../services/services';
+import { useCookies } from 'react-cookie';
 
 const hours = [
     '08:00',
@@ -38,7 +40,7 @@ const hours = [
 
 function ConsultantServiceSettings() {
 
-
+    const [cookies, setCookie] = useCookies(['access_token'])
 
     const [weekDayHours, setWeekDayHours] = useState([{ day: 0, startHour: 8, startMin: 0, endHour: 9, endMin: 0 }, { day: 0, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 1, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 2, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 3, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 4, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 5, startHour: 10, startMin: 0, endHour: 13, endMin: 0 }, { day: 6, startHour: 10, startMin: 0, endHour: 13, endMin: 0 },])
     const [allHoursArray, setAllHoursArray] = useState([[], [], [], [], [], [], []])
@@ -110,11 +112,13 @@ function ConsultantServiceSettings() {
 
     function saveChanges() {
 
-    }
-
-    useEffect(() => {
         console.log(weekDayHours)
-    }, [weekDayHours])
+
+        setConsultantWorkTimes(weekDayHours, cookies.danistir_access_token).then((response) => {
+
+            console.log(response)
+        })
+    }
 
     const names = [
         'Oliver Hansen',

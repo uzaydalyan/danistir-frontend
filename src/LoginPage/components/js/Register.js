@@ -34,11 +34,11 @@ function Register(props) {
   });
 
   const handleChange = (prop) => (event) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword,});
+    setValues({ ...values, showPassword: !values.showPassword, });
   };
 
   const handleMouseDownPassword = (event) => {
@@ -47,37 +47,41 @@ function Register(props) {
 
   const fieldsValid = () => {
 
-      setIsFormValid({
-        name: values.name != '',
-        surname: values.surname != '',
-        email: values.email != '',
-        password: values.password != '',
-        password2: values.passwordverification != ''
-      })
+    setIsFormValid({
+      name: values.name != '',
+      surname: values.surname != '',
+      email: values.email != '',
+      password: values.password != '',
+      password2: values.passwordverification != ''
+    })
+
+    return isFormValid;
   }
 
   const handleSubmit = () => {
+    console.log("handle submit started")
+    if (fieldsValid()) {
+      console.log("fields valid")
+      if (values.password == values.passwordverification) {
+        console.log("password ok")
+        registerUser(values.email, values.password).then((response) => {
+          console.log("rregister called")
+          if (response.status == 200 || response == 201) {
 
-    if(fieldsValid())
-
-    if(values.password == values.passwordverification){
-
-      registerUser(values.email, values.password).then((response) => {
-
-        if(response.status == 200){
-
-          alert("Registered!");
-          if(response.data.access_token != null){
-            props.setCookie("danistir_access_token", response.data.access_token, {path: "/"});
-            window.location.href = '/';
+            alert("Registered!");
+            if (response.data.access_token != null) {
+              props.setCookie("danistir_access_token", response.data.access_token, { path: "/" });
+              window.location.href = '/';
+            }
           }
-        }
-        else{
-          alert("Register failed!");
-        }
-      })
-    } else {
+          else {
+            alert("Register failed!");
+            console.log(response)
+          }
+        })
+      } else {
         alert("Passwords are different!");
+      }
     }
   };
 
