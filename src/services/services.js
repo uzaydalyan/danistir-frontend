@@ -4,6 +4,24 @@ const baseUrl = "https://danistir.pythonanywhere.com/";
 
 //{headers: {"Authorization" : `Bearer ${token}`}},
 
+const configWithToken = (token) => {
+
+    const headers = {"Authorization" : `Bearer ${token}`,
+                     "Content-Type": "application/json"
+    }
+
+    return {headers: headers, validateStatus: valStatus}
+}
+
+const configWithoutToken = () => {
+
+    return {validateStatus: valStatus}
+}
+
+function valStatus (status) {
+    return status >= 200;
+}
+
 export const registerUser = (values) => {
 
     return axios.post(baseUrl + "register", {
@@ -25,18 +43,28 @@ export const loginUser = (email, password,) => {
 
 export const setConsultantWorkTimes = (time, token) => {
 
-    const headers = {"Authorization" : `Bearer ${token}`,
-                     "Content-Type": "application/json"
-    }
-
-    return axios.post(baseUrl + "consultantworktime",{time : time}, {headers: headers})
+    return axios.post(baseUrl + "consultantworktime",{time : time}, configWithToken(token))
 }
 
 export const getConsultantWorkTimes = (token) => {
 
-    const headers = {"Authorization" : `Bearer ${token}`,
-                     "Content-Type": "application/json"
-    }
+    return axios.get(baseUrl + "consultantworktime", configWithToken(token))
+}
 
-    return axios.get(baseUrl + "consultantworktime", {headers: headers})
+export const getAccountInfo = (token) => {
+
+    return axios.get(baseUrl + "profile", configWithToken(token))
+}
+
+export const getconsultantSubareas = () => {
+
+    return axios.get(baseUrl + "consultantsubareas", configWithoutToken)
+}
+
+export const setNewPassword = (values, token) => {
+
+    return axios.post(baseUrl + "password",{
+        old_password: values.current,
+        new_password: values.new
+    }, configWithToken(token))
 }
