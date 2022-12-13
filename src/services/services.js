@@ -68,3 +68,21 @@ export const setNewPassword = (values, token) => {
         new_password: values.new
     }, configWithToken(token))
 }
+
+export const getSearchResults = (text, token) => {
+
+    return axios.get(baseUrl + "search", {text: text}, configWithoutToken)
+}
+
+export const getServiceSettings = (token) => {
+
+    return axios.get(baseUrl + "consultantservicesettings", configWithToken(token))
+}
+
+export const setServiceSettings = (values, token) => {
+
+    return axios.post(baseUrl + "consultantservicesettings", {
+        subAreas: values.subAreas, 
+        time: values.time
+    },configWithToken(token))
+}

@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ChipSelector from "../../../CommonComponents/js/ChipSelector";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState, useEffect, useRef } from 'react';
-import { setConsultantWorkTimes, getConsultantWorkTimes } from '../../../services/services';
+import { setConsultantWorkTimes, getConsultantWorkTimes, getconsultantSubareas, getServiceSettings, setServiceSettings } from '../../../services/services';
 import { useCookies } from 'react-cookie';
 
 const hours = [
@@ -40,9 +40,13 @@ const hours = [
 
 function ConsultantServiceSettings() {
 
+    const [allAreas, setAllAreas] = useState([])
+    const [currentAreas, setCurrentAreas] = useState([])
+    const [chipReady, setChipReady] = useState(false)
+
     const [cookies, setCookie] = useCookies(['access_token'])
 
-    const [weekDayHours, setWeekDayHours] = useState([{ day: 0, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 1, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 2, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 3, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 4, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 5, startHour: null, startMin: null, endHour: null, endMin: null }, { day: 6, startHour: null, startMin: null, endHour: null, endMin: null },])
+    const [weekDayHours, setWeekDayHours] = useState([])
 
     function getHourFromTime(time) {
 
@@ -107,11 +111,22 @@ function ConsultantServiceSettings() {
         setWeekDayHours(tmpArray)
     }
 
+    function updateCurrentAreas(areas){
+        setCurrentAreas(areas)
+    }
+
     function saveChanges() {
 
-        console.log(weekDayHours)
+        let finalAreas = []
+        currentAreas.map((area) => {
+            finalAreas.push({name: area})
+        })
 
-        setConsultantWorkTimes(weekDayHours, cookies.danistir_access_token).then((response) => {
+        let values = {subAreas: finalAreas, time: weekDayHours}
+
+        console.log(values)
+
+        setServiceSettings(values, cookies.danistir_access_token).then((response) => {
             if(response.status == 201){
                 alert("Your service hours saved successfully!")
             } else{
@@ -122,28 +137,35 @@ function ConsultantServiceSettings() {
 
     useEffect(() => {
         
-        getConsultantWorkTimes().then((response) => {
+        getconsultantSubareas().then((response) => {
+            let tmpArray = [...allAreas]
+            response.data.subAres.map((area) => {
+                
+                tmpArray.push(area.name)   
+            })
+            setAllAreas(tmpArray)
 
-            if(response.data.time != null){
-                setWeekDayHours(response.data.time)
-            } else {
-                console.log(response.statusText)
-            }
+        }).then(() => {
+
+            getServiceSettings(cookies.danistir_access_token).then((response) => {
+
+                if(response.data.time != null){
+                    setWeekDayHours(response.data.time)
+                }
+
+                if(response.data.subAreas != null){
+                    let tmpArray = [...currentAreas]
+                    response.data.subAreas.map((area) => {
+                    
+                        tmpArray.push(area.name)
+                        
+                    })
+                    setCurrentAreas(tmpArray)
+                }
+                setChipReady(true)
+            })
         })
     }, [])
-
-    const names = [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder',
-    ];
 
     return (
         <div className='consultant-service-settings'>
@@ -152,7 +174,7 @@ function ConsultantServiceSettings() {
 
                 <div className='c-account-section-title'>Hizmetler</div>
                 <div className='c-account-services'>
-                    <ChipSelector options={names} label={"Hizmetler"} />
+                    {chipReady && <ChipSelector updateCurrentAreas={updateCurrentAreas} currentOptions={currentAreas} allOptions={allAreas} label={"Hizmetler"} />}
                 </div>
 
                 <div className='c-account-section-title'>Hizmet Saatleri</div>
@@ -165,7 +187,7 @@ function ConsultantServiceSettings() {
                             {
                                 weekDayHours.map((range, index) => {
                                     if (range.day == 0) {
-
+                                            console.log(range)
                                         return (
                                             <div className='c-account-service-option-section-row'>
                                                 <Select

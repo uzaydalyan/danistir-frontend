@@ -78,7 +78,7 @@ function Register(props) {
         console.log("password ok")
         registerUser(values).then((response) => {
           console.log("rregister called")
-          if (response.status == 200 || response == 201) {
+          if (response.status == 200 || response.status == 201) {
 
             alert("Registered!");
             if (response.data.access_token != null) {
