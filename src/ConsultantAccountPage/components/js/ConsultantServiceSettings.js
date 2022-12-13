@@ -174,7 +174,7 @@ function ConsultantServiceSettings() {
 
                 <div className='c-account-section-title'>Hizmetler</div>
                 <div className='c-account-services'>
-                    {chipReady && <ChipSelector updateCurrentAreas={updateCurrentAreas} currentOptions={currentAreas} allOptions={allAreas} label={"Hizmetler"} />}
+                    {chipReady && <ChipSelector updateCurrentOptions={updateCurrentAreas} currentOptions={currentAreas} allOptions={allAreas} label={"Hizmetler"} />}
                 </div>
 
                 <div className='c-account-section-title'>Hizmet Saatleri</div>

@@ -8,16 +8,17 @@ import { getSearchResults } from '../services/services';
 
 function SearchResults(props) {
 
-  const consultantList = useRef([])
-
+  const [results, setResults] = useState([])
   const params = useParams();
 
   useEffect(() => {
 
-    getSearchResults(params.q).then((response) => {
+    console.log(params.q)
 
+    getSearchResults(params.q).then((response) => {
+      console.log(response)
       if(response.status == 200){
-        consultantList.current = response.data.consultants
+        setResults(response.data)
       } else{
         alert("Failed to load consultants!")
       }
@@ -32,7 +33,7 @@ function SearchResults(props) {
         <div className='search-results-seperator'></div>
         <div className='search-results-list'>
 
-        {consultantList.current && consultantList.current.map((consultant) => {
+        {results != [] && results.map((consultant) => {
 
             return (<ResultCard consultant={consultant} />)
         })}

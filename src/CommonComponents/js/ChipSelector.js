@@ -62,10 +62,8 @@ export default function ChipSelector(props) {
   }, [])
 
   React.useEffect(() => {
-    console.log("dsadkjaskd")
     if(loaded){
-      props.updateCurrentAreas(option)
-      console.log("dsadkjaskd")
+      props.updateCurrentOptions(option)
     }
   }, [loaded, option, props])
 

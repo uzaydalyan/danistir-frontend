@@ -35,13 +35,13 @@ function FilterBar() {
     return ( 
         <div className="filter-bar">
             <div className="filter-bar-title">Danışmanlık Alanları</div>
-            <ChipSelector options={names} label={"Alan"}/>
+            <ChipSelector updateCurrentOptions={() => {}} currentOptions={[]} allOptions={names} label={"Alan"}/>
             <div className="filter-bar-seperator"></div>
             <div className="filter-bar-title">Danışmanlık Ücretleri</div>
             <MinMaxSelector />
             <div className="filter-bar-seperator"></div>
             <div className="filter-bar-title">Aranan Gün</div>
-            <ChipSelector options={days} label={"Gün"}/>
+            <ChipSelector updateCurrentOptions={() => {}} currentOptions={[]} allOptions={days} label={"Gün"}/>
             <div className="filter-bar-seperator"></div>
             <div className="filter-bar-title">Aranan Saat Aralığı</div>
             <TimeRangeSelector />

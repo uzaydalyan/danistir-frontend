@@ -9,6 +9,11 @@ function HomePage() {
     const [searchWord, setSearchWord] = useState("");
     const navigate = useNavigate();
 
+    const handleSearchInputChange = (event) => {
+
+        setSearchWord(event.target.value)
+    }
+
 
     const handleSearchClick = () => {
 
@@ -35,6 +40,7 @@ function HomePage() {
 
                     <div className="search-bar">
                         <input
+                            onChange={handleSearchInputChange}
                             type="text"
                             name="search-text"
                             id="search-text"
