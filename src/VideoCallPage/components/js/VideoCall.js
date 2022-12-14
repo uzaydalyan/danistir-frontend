@@ -3,7 +3,7 @@ import '../scss//VideoCall.scss'
 import { AgoraVideoPlayer } from "agora-rtc-react";
 import VideoControls from './VideoControls';
 import { useState, useEffect, useRef } from 'react';
-import { useClient, config, useMicrophoneAndCameraTracks, channelName } from '../../../settings';
+import { useClient, config, useMicrophoneAndCameraTracks} from '../../../settings';
 
 
 
@@ -76,12 +76,12 @@ function VideoCall(props) {
 
         if (ready && tracks) {
             try {
-                init(channelName);
+                init(props.channelName);
             } catch (error) {
                 console.log(error);
             }
         }
-    }, [channelName, client, ready, tracks]);
+    }, [props.channelName, client, ready, tracks]);
 
     return (
         <div className="video-call">
