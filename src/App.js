@@ -9,6 +9,7 @@ import HomePage from './HomePage/HomePage';
 import SearchResults from './SearchResultsPage/SearchResultsPage';
 import ConsultantAccountPage from './ConsultantAccountPage/ConsultantAccountPage';
 import VideoCallPage from './VideoCallPage/VideoCallPage';
+import MeetingsPage from './MeetingsPage/MeetingsPage';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
     let flag = false;
     //check user has JWT token
     if(cookies.danistir_access_token){
-
+      flag = true
     } else{
 
         flag = false;
@@ -36,10 +37,11 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} /> 
           <Route exact path="/login" element={<LoginPage />} />
-          <Route exact path="/account" element={hasJWT() ?  <Account /> : <Navigate to="/login" />} /> 
-          <Route exact path="/search_results" element={<SearchResults />} /> 
-          <Route exact path="/account_c" element={hasJWT() ?  <ConsultantAccountPage /> : <Navigate to="/login" />} />
+          <Route exact path="/search_results/:q" element={<SearchResults />} /> 
+          <Route exact path="/search_results/" element={<SearchResults />} /> 
+          <Route exact path="/account" element={hasJWT() ?  <ConsultantAccountPage/> : <Navigate to="/login" />}/>
           <Route exact path="/video" element={<VideoCallPage />} /> 
+          <Route exact path="/meetings" element={ hasJWT() ?  <MeetingsPage /> : <Navigate to="/login" />} /> 
         </Routes>
       </BrowserRouter>
     </div>

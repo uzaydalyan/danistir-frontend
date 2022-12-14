@@ -1,0 +1,27 @@
+@import 'variables';
+
+.meetings-page {
+
+    grid-column: 2 / 3;
+    display: grid;
+    grid-row-gap: 15px;
+    margin-top: 50px;
+
+    .meetings-page-title {
+
+        font-size: 1.2rem;
+        border-bottom: 1px solid #DADADA;
+        padding-bottom: 10px;
+        padding-right: 30px;
+        margin-bottom: 15px;
+    }
+
+    .meeting-card-bg{
+
+        width: 50%;
+    }
+}
+
+.navbar{
+    display: block;
+}

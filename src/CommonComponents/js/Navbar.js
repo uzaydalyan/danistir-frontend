@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
@@ -8,17 +8,27 @@ import { Login } from '@mui/icons-material';
 
 const navigation = [
   { name: 'Anasayfa', href: '/', current: true },
-  { name: 'Danış', href: '#', current: false },
-  { name: 'Hakkımızda', href: '#', current: false },
+  { name: 'Danış', href: '/search_results/', current: false },
+  { name: 'Görüşmelerin', href: '/meetings', current: false },
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+  
 
 
 export default function Navbar(props) {
+
+  const[navItems, setNavItems] = useState(navigation)
+
+  useEffect(() => {
+    let tmpArray = [...navigation]
+    if(!hasJWT()){
+      setNavItems(tmpArray.filter((item, index) => item.name != 'Görüşmelerin'))
+    }
+  }, [])
 
   const [cookies, setCookie, removeCookie] = useCookies(['danistir_access_token'])
 
@@ -55,7 +65,7 @@ export default function Navbar(props) {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {navItems.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -100,17 +110,17 @@ export default function Navbar(props) {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Your Profile
+                            Profil
                           </a>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/account_C"
+                            href="/account"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Settings
+                            Hesap Ayarları
                           </a>
                         )}
                       </Menu.Item>
@@ -121,7 +131,7 @@ export default function Navbar(props) {
                             onClick={() => signOut()}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Sign out
+                            Çıkış Yap
                           </a>
                         )}
                       </Menu.Item>

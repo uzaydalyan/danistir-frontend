@@ -21,7 +21,7 @@ export default function ScheduleMeetingTextField() {
 
         <div className='schedule-text-fields'>
             <div className='text-field-title'>Danışmak istediğiniz alan:</div>
-            <ChipSelector options={names} label="Alan" />
+            <ChipSelector allOptions={names} updateCurrentOptions={() => {}} currentOptions={[]} label="Alan" />
             <div className='text-field-title'>Sorununuz hakkında kısa bilgilendirme:</div>
             <TextField
                 id="outlined-multiline-static"

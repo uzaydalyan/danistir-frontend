@@ -7,8 +7,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Button } from '@mui/material';
-import { useState } from 'react';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
+import { useEffect, useState } from 'react';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { registerUser } from '../../../services/services';
 import React from 'react';
@@ -23,6 +23,7 @@ function Register(props) {
     password: '',
     passwordverification: '',
     showPassword: false,
+    isConsultant: false
   });
 
   const [isFormValid, setIsFormValid] = useState({
@@ -33,12 +34,23 @@ function Register(props) {
     password2: true
   });
 
+ 
+
   const handleChange = (prop) => (event) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleIsConsultant = (event) => {
+    setValues({...values, isConsultant: event.target.checked})
+  }  
+
+  useEffect(() => {
+
+    console.log(values)
+  }, [values])
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword,});
+    setValues({ ...values, showPassword: !values.showPassword, });
   };
 
   const handleMouseDownPassword = (event) => {
@@ -47,37 +59,37 @@ function Register(props) {
 
   const fieldsValid = () => {
 
-      setIsFormValid({
-        name: values.name != '',
-        surname: values.surname != '',
-        email: values.email != '',
-        password: values.password != '',
-        password2: values.passwordverification != ''
-      })
+    setIsFormValid({
+      name: values.name != '',
+      surname: values.surname != '',
+      email: values.email != '',
+      password: values.password != '',
+      password2: values.passwordverification != ''
+    })
+
+    return isFormValid;
   }
 
   const handleSubmit = () => {
-
-    if(fieldsValid())
-
-    if(values.password == values.passwordverification){
-
-      registerUser(values.email, values.password).then((response) => {
-
-        if(response.status == 200){
-
-          alert("Registered!");
-          if(response.data.access_token != null){
-            props.setCookie("danistir_access_token", response.data.access_token, {path: "/"});
-            window.location.href = '/';
+    if (fieldsValid()) {
+      if (values.password == values.passwordverification) {
+        registerUser(values).then((response) => {
+          if (response.status == 200 || response.status == 201) {
+            console.log(response.data)
+            alert("Registered!");
+            if (response.data.access_token != null) {
+              props.setCookie("danistir_access_token", response.data.access_token, { path: "/" });
+              window.location.href = '/';
+            }
           }
-        }
-        else{
-          alert("Register failed!");
-        }
-      })
-    } else {
+          else {
+            alert("Register failed!");
+            console.log(response)
+          }
+        })
+      } else {
         alert("Passwords are different!");
+      }
     }
   };
 
@@ -182,6 +194,8 @@ function Register(props) {
           label="Password2"
         />
       </FormControl>
+
+      <FormControlLabel className="consultant-checkbox" control={<Checkbox onChange={handleIsConsultant} />} label="Danışmanlık yapmak istiyorum." />
 
       <Button onClick={handleSubmit} variant="contained" className="submit-button regiter-button">Kayıt Ol</Button>
       <div onClick={() => { props.handleBanner('left') }} className="login-text">Zaten üye misiniz? Giriş yapmak için tıklayın!</div>

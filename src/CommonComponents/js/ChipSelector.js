@@ -8,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import CancelRounded from '@mui/icons-material/CancelRounded'
+import { set } from 'date-fns';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,7 +35,8 @@ function getStyles(one, option, theme) {
 
 export default function ChipSelector(props) {
 
-  const options = props.options
+  const [options, setOptions] = React.useState([])
+  const [loaded, setLoaded] = React.useState(false)
   const theme = useTheme();
   const [option, setOption] = React.useState([]);
 
@@ -43,7 +45,7 @@ export default function ChipSelector(props) {
       target: { value },
     } = event;
     setOption(
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === 'string' ? value.split(',') : value
     );
     
   };
@@ -51,6 +53,19 @@ export default function ChipSelector(props) {
   const handleDelete = (optionToDelete) => {
     setOption( (allOptions) =>  allOptions.filter(one => one !== optionToDelete));
 }
+
+  React.useEffect(() => {
+    setOption(props.currentOptions);
+    setOptions(props.allOptions);
+    setLoaded(true)
+  }, [])
+
+  React.useEffect(() => {
+    if(loaded){
+      props.updateCurrentOptions(option)
+    }
+  }, [loaded, option, props])
+
 
   return (
     <div>

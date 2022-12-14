@@ -1,19 +1,25 @@
 import * as React from 'react';
 import { ScheduleMeeting } from 'react-schedule-meeting';
 
-export default function MeetingScheduler() {
+export default function MeetingScheduler(props) {
 
-  const availableTimeslots = [0, 1, 2, 3, 4, 5].map((id) => {
-    return {
-      id,
-      startTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(9, 0, 0, 0)),
-      endTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(17, 0, 0, 0)),
-    };
-  });
+  const availableTimeslots =  () => {
+
+    let availableTimes = []
+
+    if(props.freeTimes){
+
+      for(let i = 0; i < props.freeTimes.length; i++){
+
+        availableTimes.push({i, startTime: props.freeTimes[i].start, endTime: props.freeTimes[i].end})
+      }
+    }
+    return availableTimes;
+  } 
 
   const onSelect = (startTimeEventEmit) => {
 
-    console.log(startTimeEventEmit)
+    props.setSelectedTime(startTimeEventEmit)
   }
 
   return (
@@ -21,8 +27,8 @@ export default function MeetingScheduler() {
       borderRadius={10}
       format_startTimeFormatString={"HH:mm"}
       primaryColor="#ffe6cc"
-      eventDurationInMinutes={30}
-      availableTimeslots={availableTimeslots}
+      eventDurationInMinutes={60}
+      availableTimeslots={availableTimeslots()}
       onStartTimeSelect={(startTimeEventEmit) => onSelect(startTimeEventEmit)}
     />
   );

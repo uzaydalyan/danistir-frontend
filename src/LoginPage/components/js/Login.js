@@ -62,19 +62,16 @@ function Login(props) {
 
         if(response.status == 200){
 
-          return response.json();
+          if(response.data != null){
+            props.setCookie("danistir_access_token", response.data.access_token, {path: "/"});
+            window.location.href = '/';
+          }
         }
         else{
           alert("Wrong username or password!");
           return null
         }
-      }).then(function(data) {
-        if(data != null){
-          props.setCookie("danistir_access_token", data.access_token, {path: "/"});
-          window.location.href = '/';
-        }
-        
-      });
+      })
     }
   };
 

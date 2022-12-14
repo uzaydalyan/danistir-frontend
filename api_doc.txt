@@ -19,6 +19,9 @@ Request:
 {
     "email": "uzay@gmail.com",
     "password": "123"
+    "name": "Uzay",
+    "surname": "Dalyan"
+    "isConsultant": true,
 }
 
 Response
@@ -75,3 +78,47 @@ Response
         }
     ]
 }
+
+
+
+Videcall
+
+Request -with access_token
+{
+    
+}
+
+Response 
+{
+
+    appointmentId
+
+}
+
+
+
+/Search
+
+Response
+
+{
+    results: [
+        {
+            "consultantId" : 1,
+            "name" : "Uzay Dalyan",
+            "rating" : 4.5,
+            "ratingCount" : 210,
+            "fields": (ister array ister birleştirilmiş string nasıl kolayına geliyosa)
+        },
+        {
+            "consultantId" : 2,
+            "name" : "Uzay Dalyan",
+            "rating" : 4.5,
+            "ratingCount" : 210,
+            "fields": (ister array ister birleştirilmiş string nasıl kolayına geliyosa)
+        }
+    ]
+
+}
+
+

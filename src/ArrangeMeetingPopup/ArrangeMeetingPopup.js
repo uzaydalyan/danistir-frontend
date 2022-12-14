@@ -16,6 +16,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
 import ChipSelector from '../CommonComponents/js/ChipSelector';
 import ScheduleMeetingTextField from './components/js/ScheduleMeetingTextFields';
+import { setAppointment } from '../services/services';
+import { useCookies } from 'react-cookie';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -23,28 +25,58 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function ArrangeMeetingPopup(props) {
 
+    console.log(props)
+
+    const [cookies, setCookie] = useCookies(['access_token'])
+
     const names = [
         'Oliver Hansen',
         'Van Henry',
         'April Tucker',
     ];
 
-    const steps = ['Uygun bir tarih seçin', 'Gerekli bilgileri girin', 'Randevunuzu Onaylayın'];
+    const [meetingValues, setMeetingValues] = React.useState({id: props.consultant.consultant_info.consultant_id, appointmentDate: null})
+
+    function setSelectedTime(date){
+
+        setMeetingValues({...meetingValues,  appointmentDate: date.startTime.toString().split(' ').slice(0, 5).join(' ')})
+    }
+
+    const steps = ['Uygun bir tarih seçin', 'Gerekli bilgileri girin', ''];
 
     const handleClose = () => {
         setActiveStep(0);
         props.closePopup()
     };
 
-    const stepViews = [<MeetingScheduler />, <ScheduleMeetingTextField />, <div>Randevunuzu onaylayın</div>]
+    const stepViews = [<MeetingScheduler freeTimes={props.consultant.consultant_info.freeTimes} setSelectedTime={setSelectedTime} />, <ScheduleMeetingTextField />, <div>Randevunuzu onaylandı!</div>]
 
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
 
-        if(activeStep === stepViews.length){
+        if(activeStep === stepViews.length-2){
+
+            if(cookies.danistir_access_token){
+                console.log(meetingValues)
+                setAppointment(meetingValues, cookies.danistir_access_token).then((response) => {
+                    console.log(response)
+                    if(response.status != 200 && response.status != 201){
+                        alert("Failed while arranging appointment!");
+                        handleClose();
+                    }
+                })
+            } else{
+                window.location.href = '/login';
+            }
+
+            
+        }
+
+        if(activeStep === stepViews.length-1){
             handleClose()
         }
+
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 

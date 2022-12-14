@@ -1,10 +1,30 @@
 import React, { useState } from "react";
 import CrossCard from "./components/js/CrossCard";
+import { getSearchResults } from "../services/services";
+import {Link, useNavigate} from 'react-router-dom';
 import './HomePage.scss'
 
 function HomePage() {
 
-    const [show, setShow] = useState(false);
+    const [searchWord, setSearchWord] = useState("");
+    const navigate = useNavigate();
+
+    const handleSearchInputChange = (event) => {
+
+        setSearchWord(event.target.value)
+    }
+
+
+    const handleSearchClick = () => {
+
+        navigate('/search_results/' + searchWord)
+
+        /*getSearchResults(searchWord).then((response) => {
+
+
+        })*/
+    }
+
     return (
         <div className="home">
             <div className="home-banner">
@@ -20,14 +40,14 @@ function HomePage() {
 
                     <div className="search-bar">
                         <input
+                            onChange={handleSearchInputChange}
                             type="text"
                             name="search-text"
                             id="search-text"
-                            autoComplete="family-name"
                             className="search-bar-input rounded-r-none border-r-0 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             placeholder="Hangi konuda danışmak istiyorsun?"
                         />
-                        <button className="search-bar-button">
+                        <button className="search-bar-button" onClick={handleSearchClick}>
                             Ara
                         </button>
                     </div>
