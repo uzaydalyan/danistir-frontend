@@ -111,7 +111,7 @@ function ConsultantServiceSettings() {
         setWeekDayHours(tmpArray)
     }
 
-    function updateCurrentAreas(areas){
+    function updateCurrentAreas(areas) {
         setCurrentAreas(areas)
     }
 
@@ -119,27 +119,29 @@ function ConsultantServiceSettings() {
 
         let finalAreas = []
         currentAreas.map((area) => {
-            finalAreas.push({name: area})
+            finalAreas.push({ name: area })
         })
 
-        let values = {subAreas: finalAreas, time: weekDayHours}
+        console.log(weekDayHours)
+
+        let values = { subAreas: finalAreas, time: weekDayHours }
 
         setServiceSettings(values, cookies.danistir_access_token).then((response) => {
-            if(response.status == 201){
+            if (response.status == 201) {
                 alert("Your service hours saved successfully!")
-            } else{
+            } else {
                 alert("Failed to save settings!")
             }
         })
     }
 
     useEffect(() => {
-        
+
         getconsultantSubareas().then((response) => {
             let tmpArray = [...allAreas]
             response.data.subAres.map((area) => {
-                
-                tmpArray.push(area.name)   
+
+                tmpArray.push(area.name)
             })
             setAllAreas(tmpArray)
 
@@ -147,16 +149,16 @@ function ConsultantServiceSettings() {
 
             getServiceSettings(cookies.danistir_access_token).then((response) => {
 
-                if(response.data.time != null){
+                if (response.data.time != null) {
                     setWeekDayHours(response.data.time)
                 }
 
-                if(response.data.subAreas != null){
+                if (response.data.subAreas != null) {
                     let tmpArray = [...currentAreas]
                     response.data.subAreas.map((area) => {
-                    
+
                         tmpArray.push(area.name)
-                        
+
                     })
                     setCurrentAreas(tmpArray)
                 }
@@ -379,6 +381,9 @@ function ConsultantServiceSettings() {
                                         return (
                                             <div className='c-account-service-option-section-row'>
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 3, index, "start")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.startHour, range.startMin)}
                                                     label="Start"
                                                 >
@@ -392,6 +397,9 @@ function ConsultantServiceSettings() {
                                                 <div className='c-account-horizontal-seperator'></div>
 
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 3, index, "end")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.endHour, range.endMin)}
                                                     label="End"
                                                 >
@@ -436,6 +444,9 @@ function ConsultantServiceSettings() {
                                         return (
                                             <div className='c-account-service-option-section-row'>
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 4, index, "start")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.startHour, range.startMin)}
                                                     label="Start"
                                                 >
@@ -449,6 +460,9 @@ function ConsultantServiceSettings() {
                                                 <div className='c-account-horizontal-seperator'></div>
 
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 4, index, "end")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.endHour, range.endMin)}
                                                     label="Start"
                                                 >
@@ -494,6 +508,9 @@ function ConsultantServiceSettings() {
                                         return (
                                             <div className='c-account-service-option-section-row'>
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 5, index, "start")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.startHour, range.startMin)}
                                                     label="Start"
                                                 >
@@ -507,6 +524,9 @@ function ConsultantServiceSettings() {
                                                 <div className='c-account-horizontal-seperator'></div>
 
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 5, index, "end")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.endHour, range.endMin)}
                                                     label="Start"
                                                 >
@@ -551,6 +571,9 @@ function ConsultantServiceSettings() {
                                         return (
                                             <div className='c-account-service-option-section-row'>
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 6, index, "start")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.startHour, range.startMin)}
                                                     label="Start"
                                                 >
@@ -564,6 +587,9 @@ function ConsultantServiceSettings() {
                                                 <div className='c-account-horizontal-seperator'></div>
 
                                                 <Select
+                                                    onChange={(event) => {
+                                                        editRange(event, 6, index, "end")
+                                                    }}
                                                     defaultValue={convertTimeToString(range.endHour, range.endMin)}
                                                     label="Start"
                                                 >
