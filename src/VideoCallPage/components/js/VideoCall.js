@@ -15,6 +15,8 @@ function VideoCall(props) {
     const [start, setStart] = useState(false);
     const client = useClient();
     const { ready, tracks } = useMicrophoneAndCameraTracks();
+    config.token = props.tk
+    console.log(config)
 
     const setInCall = () => {
 
@@ -63,7 +65,9 @@ function VideoCall(props) {
             try {
                 await client.join(config.appId, name, config.token, null);
             } catch (error) {
-                console.log("error");
+                alert("Video chat is broken, please refresh the page or leave the chat.")
+                tracks[0].close()
+                tracks[1].close()
             }
 
             if (tracks) await client.publish([tracks[0], tracks[1]]);

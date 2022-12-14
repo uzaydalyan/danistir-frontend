@@ -71,15 +71,11 @@ function Register(props) {
   }
 
   const handleSubmit = () => {
-    console.log("handle submit started")
     if (fieldsValid()) {
-      console.log("fields valid")
       if (values.password == values.passwordverification) {
-        console.log("password ok")
         registerUser(values).then((response) => {
-          console.log("rregister called")
           if (response.status == 200 || response.status == 201) {
-
+            console.log(response.data)
             alert("Registered!");
             if (response.data.access_token != null) {
               props.setCookie("danistir_access_token", response.data.access_token, { path: "/" });

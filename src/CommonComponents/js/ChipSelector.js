@@ -55,7 +55,6 @@ export default function ChipSelector(props) {
 }
 
   React.useEffect(() => {
-    console.log(props)
     setOption(props.currentOptions);
     setOptions(props.allOptions);
     setLoaded(true)

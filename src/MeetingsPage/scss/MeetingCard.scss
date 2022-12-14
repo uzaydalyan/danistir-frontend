@@ -1,0 +1,25 @@
+@import 'variables';
+
+.meeting-card{
+
+    width: 100%;
+    display: grid;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #DADADA;
+
+    .meeting-card-name{
+        margin-bottom: 5px;
+    }
+
+    .meeting-card-time{
+        margin-bottom: 5px;
+    }
+
+    .meeting-card-buttons{
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-column-gap: 15px;
+        justify-self: end;
+    }
+}

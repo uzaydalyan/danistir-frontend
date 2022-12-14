@@ -86,3 +86,23 @@ export const setServiceSettings = (values, token) => {
         time: values.time
     },configWithToken(token))
 }
+
+export const setAppointment = (values, token) => {
+    console.log("HHHEEERRRE ARREERERE")
+    console.log(values)
+    console.log(token)
+    return axios.post(baseUrl + "takeappointment", {
+        consultantId: values.id,
+        appointmentDate: values.appointmentDate
+    },configWithToken(token))
+}
+
+export const getConsultantAppointments = (token) => {
+
+    return axios.get(baseUrl + "consultantappointments", configWithToken(token))
+}
+
+export const getClientAppointments = (token) => {
+
+    return axios.get(baseUrl + "clientappointments", configWithToken(token))
+}

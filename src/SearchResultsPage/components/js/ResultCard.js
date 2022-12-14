@@ -12,9 +12,12 @@ function ResultCard(props) {
   function getAreasAsText(areas){
 
     let text = "";
-    areas.map((area) => {
-
-      text += area.name;
+    areas.map((area, index) => {
+      if(index != 0){
+        text += ", " + area.name;
+      } else{
+        text += area.name
+      }
     })
 
     return text;
@@ -43,7 +46,7 @@ function ResultCard(props) {
         </div>
 
       </div>
-      <ArrangeMeetingPopup consultant={consultant} popupOpen={popupOpen} closePopup={closePopup} />
+      {popupOpen && <ArrangeMeetingPopup consultant={consultant} popupOpen={popupOpen} closePopup={closePopup} />} 
     </div>
   );
 }

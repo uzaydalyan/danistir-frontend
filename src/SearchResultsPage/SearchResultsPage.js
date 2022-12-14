@@ -13,10 +13,7 @@ function SearchResults(props) {
 
   useEffect(() => {
 
-    console.log(params.q)
-
     getSearchResults(params.q).then((response) => {
-      console.log(response)
       if(response.status == 200){
         setResults(response.data)
       } else{

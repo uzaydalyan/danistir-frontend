@@ -3,11 +3,19 @@ import { Button } from "@mui/material";
 import VideoCall from "./components/js/VideoCall";
 import './VideoCallPage.scss'
 import jQuery from "jquery";
+import { useParams } from "react-router-dom";
+import { useRef } from "react";
 
 function VideoCallPage() {
     const [inCall, setInCall] = useState(false);
+    const tk = useRef()
+    const params = useParams();
 
     useEffect(() => {
+        tk.current = params.t
+        var url_string = window.location.href
+        var url = new URL(url_string);
+        tk.current = url.searchParams.get("t");
 
         if(inCall){
             jQuery(".navbar").css("display", "none")
@@ -26,8 +34,8 @@ function VideoCallPage() {
 
     return (
         <div className="video-call-page">
-            {inCall ? (
-                <VideoCall setInCall={setInCall} />
+            {inCall && tk ? (
+                <VideoCall setInCall={setInCall} tk={tk.current} />
             ) : (
                 <div className="pre-call-buttons">
                     <Button

@@ -124,13 +124,11 @@ function ConsultantServiceSettings() {
 
         let values = {subAreas: finalAreas, time: weekDayHours}
 
-        console.log(values)
-
         setServiceSettings(values, cookies.danistir_access_token).then((response) => {
             if(response.status == 201){
                 alert("Your service hours saved successfully!")
             } else{
-                console.log(response.statusText)
+                alert("Failed to save settings!")
             }
         })
     }
@@ -187,7 +185,6 @@ function ConsultantServiceSettings() {
                             {
                                 weekDayHours.map((range, index) => {
                                     if (range.day == 0) {
-                                            console.log(range)
                                         return (
                                             <div className='c-account-service-option-section-row'>
                                                 <Select
