@@ -5,10 +5,11 @@ import {Link, useNavigate} from 'react-router-dom';
 function MeetingCard(props) {
 
     const navigate = useNavigate();
+    console.group(props)
 
     function handleVideoClick(){
         console.log(props.meeting.appointmentToken)
-        navigate('/video?t=' + props.meeting.appointmentToken)
+        navigate('/video?t=' + props.meeting.appointmentToken + "&ch=" + props.meeting.channelName)
     }
 
 

@@ -9,6 +9,7 @@ import { useRef } from "react";
 function VideoCallPage() {
     const [inCall, setInCall] = useState(false);
     const tk = useRef()
+    const channelName = useRef()
     const params = useParams();
 
     useEffect(() => {
@@ -16,6 +17,7 @@ function VideoCallPage() {
         var url_string = window.location.href
         var url = new URL(url_string);
         tk.current = url.searchParams.get("t");
+        channelName.current = url.searchParams.get("ch");
 
         if(inCall){
             jQuery(".navbar").css("display", "none")
@@ -35,7 +37,7 @@ function VideoCallPage() {
     return (
         <div className="video-call-page">
             {inCall && tk ? (
-                <VideoCall setInCall={setInCall} tk={tk.current} />
+                <VideoCall setInCall={setInCall} tk={tk.current} channelName={channelName.current} />
             ) : (
                 <div className="pre-call-buttons">
                     <Button

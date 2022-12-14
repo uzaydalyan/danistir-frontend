@@ -63,7 +63,7 @@ function MeetingsPage(props) {
                 <ToggleButton value="0">Danışanlarım</ToggleButton>
                 <ToggleButton value="1">Danıştıklarım</ToggleButton>
             </ToggleButtonGroup>}
-            {meetings && meetings.length !== 0 && isConsultant && meetings.map((meeting) => {
+            {meetings &&  meetings.length!== 0 && isConsultant && meetings.map((meeting) => {
                 return (<div className='meeting-card-bg'><MeetingCard isWithClient={switchSelection == "0"} meeting={meeting} /></div>);
             })}
 
