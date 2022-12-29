@@ -122,8 +122,6 @@ function ConsultantServiceSettings() {
             finalAreas.push({ name: area })
         })
 
-        console.log(weekDayHours)
-
         let values = { subAreas: finalAreas, time: weekDayHours }
 
         setServiceSettings(values, cookies.danistir_access_token).then((response) => {

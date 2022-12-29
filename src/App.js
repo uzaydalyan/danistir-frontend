@@ -10,6 +10,7 @@ import SearchResults from './SearchResultsPage/SearchResultsPage';
 import ConsultantAccountPage from './ConsultantAccountPage/ConsultantAccountPage';
 import VideoCallPage from './VideoCallPage/VideoCallPage';
 import MeetingsPage from './MeetingsPage/MeetingsPage';
+import ProfilePage from './ProfilePage/ProfilePage';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Route exact path="/account" element={hasJWT() ?  <ConsultantAccountPage/> : <Navigate to="/login" />}/>
           <Route exact path="/video" element={<VideoCallPage />} /> 
           <Route exact path="/meetings" element={ hasJWT() ?  <MeetingsPage /> : <Navigate to="/login" />} /> 
+          <Route exact path="/profile" element={<ProfilePage />} /> 
         </Routes>
       </BrowserRouter>
     </div>

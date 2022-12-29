@@ -1,0 +1,24 @@
+@import 'variables';
+
+.profile-page {
+
+    grid-column: 2 / 3;
+    display: grid;
+    margin-top: 75px;
+
+    .profile-bio-text{
+
+        text-align: center;
+    }
+
+    .comments-title {
+
+        font-size: 1.5rem;
+        text-align: center;
+        border-bottom: 1px solid #DADADA;
+        padding-bottom: 5px;
+        margin-bottom: 30px;
+        margin-top: 40px;
+        justify-self: center;
+    }
+}
