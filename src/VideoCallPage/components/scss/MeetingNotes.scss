@@ -1,0 +1,29 @@
+@import 'variables';
+
+.meeting-notes{
+
+    position: absolute;
+    top: 1%;
+    bottom: 1%;
+    right: 2%;
+    min-width: 500px;
+    height: 100%;
+
+    .notes-button{
+        position: absolute;
+        right: 1%;
+        top: 1%;
+    }
+
+    .note-area{
+        height: 100%;
+        width: 100%;
+    }
+
+    .save-note-button{
+
+        position: absolute;
+        right: 1%;
+        bottom: 2%;
+    }
+}
