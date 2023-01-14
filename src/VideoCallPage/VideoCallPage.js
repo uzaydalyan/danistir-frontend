@@ -5,6 +5,7 @@ import './VideoCallPage.scss'
 import jQuery from "jquery";
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
+import MeetingNotes from "./components/js/MeetingNotes";
 
 function VideoCallPage() {
     const [inCall, setInCall] = useState(false);
@@ -16,7 +17,8 @@ function VideoCallPage() {
         tk.current = params.t
         var url_string = window.location.href
         var url = new URL(url_string);
-        tk.current = url.searchParams.get("t");
+        let token = url.searchParams.get("t");
+        tk.current = token.replace(/ /g, "+")
         channelName.current = url.searchParams.get("ch");
 
         if(inCall){
@@ -37,7 +39,7 @@ function VideoCallPage() {
     return (
         <div className="video-call-page">
             {inCall && tk ? (
-                <VideoCall setInCall={setInCall} tk={tk.current} channelName={channelName.current} />
+                <><VideoCall setInCall={setInCall} tk={tk.current} channelName={channelName.current} /><MeetingNotes /></>
             ) : (
                 <div className="pre-call-buttons">
                     <Button

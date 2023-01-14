@@ -18,6 +18,7 @@ function VideoCall(props) {
     config.token = props.tk
     console.log(config)
 
+
     const setInCall = () => {
 
         props.setInCall()
@@ -31,7 +32,9 @@ function VideoCall(props) {
     }
 
     useEffect(() => {
+        
         let init = async (name) => {
+            console.log("BEFORE PUBLISH")
             client.on("user-published", async (user, mediaType) => {
                 await client.subscribe(user, mediaType);
                 if (mediaType === "video") {
@@ -68,6 +71,7 @@ function VideoCall(props) {
                 alert("Video chat is broken, please refresh the page or leave the chat.")
                 tracks[0].close()
                 tracks[1].close()
+                console.log(error)
             }
 
             if (tracks) await client.publish([tracks[0], tracks[1]]);

@@ -5,6 +5,7 @@ import { getAccountInfo, getClientAppointments, getConsultantAppointments } from
 import { useCookies } from 'react-cookie';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import jQuery from 'jquery';
+import Agenda from './js/Agenda';
 
 function MeetingsPage(props) {
 
@@ -13,16 +14,30 @@ function MeetingsPage(props) {
     const [meetings, setMeetings] = useState([]);
     const [isConsultant, setIsConsultant] = useState(false);
     const [switchSelection, setSwitchSelection] = useState("0");
+    
 
     function handleSwitchSelection(event) {
         setSwitchSelection(event.target.value)
         if(event.target.value == "0"){
             getConsultantAppointments(cookies.danistir_access_token).then((response) => {
-                setMeetings(response.data)
+                let tmpMeetings = []
+
+                response.data.map((aMeeting) => {
+
+                    aMeeting.isWithClient = true
+                    tmpMeetings.push(aMeeting)
+                })
+                setMeetings(tmpMeetings)
             })
         } else{
             getClientAppointments(cookies.danistir_access_token).then((response) => {
-                setMeetings(response.data)
+                let tmpMeetings = []
+                response.data.map((aMeeting) => {
+
+                    aMeeting.isWithClient = false
+                    tmpMeetings.push(aMeeting)
+                })
+                setMeetings(tmpMeetings)
             })
         }
     }
@@ -39,6 +54,7 @@ function MeetingsPage(props) {
             if (is_consultant) {
                 getConsultantAppointments(cookies.danistir_access_token).then((response) => {
                     setMeetings(response.data)
+                    console.log(response.data)
                 })
             } else {
                 setSwitchSelection("1")
@@ -52,25 +68,7 @@ function MeetingsPage(props) {
 
     return (
         <div className='meetings-page'>
-            <div className='meetings-page-title'>Görüşmelerim</div>
-            {isConsultant && <ToggleButtonGroup
-                color="primary"
-                value={switchSelection}
-                exclusive
-                onChange={handleSwitchSelection}
-                aria-label="Platform"
-            >
-                <ToggleButton value="0">Danışanlarım</ToggleButton>
-                <ToggleButton value="1">Danıştıklarım</ToggleButton>
-            </ToggleButtonGroup>}
-            {meetings &&  meetings.length!== 0 && isConsultant && meetings.map((meeting) => {
-                return (<div className='meeting-card-bg'><MeetingCard isWithClient={switchSelection == "0"} meeting={meeting} /></div>);
-            })}
-
-            {meetings && meetings.length !== 0 && !isConsultant && meetings.map((meeting) => {
-                return (<div className='meeting-card-bg'><MeetingCard isWithClient={switchSelection == "0"} meeting={meeting} /></div>);
-            })}
-
+            <Agenda events={meetings}/>
         </div>
     );
 }

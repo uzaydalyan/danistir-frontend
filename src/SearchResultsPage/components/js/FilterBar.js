@@ -1,52 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ChipSelector from "../../../CommonComponents/js/ChipSelector";
 import '../scss/FilterBar.scss'
 import MinMaxSelector from "./MinMaxSelector";
 import DatePicker from "./DatePicker";
 import TimeRangeSelector from "./TimeRangeSelector";
 import { Button } from "@mui/material";
+import { getconsultantSubareas } from '../../../services/services';
+
+const days = [
+  'Pazartesi',
+  'Salı',
+  'Çarşamba',
+  'Perşembe',
+  'Cuma',
+  'Cumartesi',
+  'Pazar'
+];
+
+function FilterBar(props) {
+
+    const [allAreas, setAllAreas] = useState([])
+
+    const [areaSelectorReady, setAreaSelectorReady] = useState(false)
+    const [selectedAreas, setSelectedAreas] = useState([])
+
+    const [selectedMin, setSelectedMin] = useState()
+    const [selectedMax, setSelectedMax] = useState()
+
+    const [selectedDays, setSelectedDays] = useState([])
+
+    const [selectedStartHour, setSelectedStartHour] = useState()
+    const [selectedEndHour, setSelectedEndHour] = useState()
+
+    function handleFilterButton(){
+
+      props.handleFilterButton(
+        selectedAreas, selectedMin, selectedMax, selectedDays, selectedStartHour, selectedEndHour
+      )
+    }
 
 
-function FilterBar() {
+    useEffect(() => {
 
-    const names = [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder',
-      ];
+      getconsultantSubareas().then((response) => {
+        let tmpArray = [...allAreas]
+        response.data.subAres.map((area) => {
 
-      const days = [
-        'Pazartesi',
-        'Salı',
-        'Çarşamba',
-        'Perşembe',
-        'Cuma',
-        'Cumartesi',
-        'Pazar'
-      ];
+            tmpArray.push(area.name)
+        })
+        setAllAreas(tmpArray)
+        setAreaSelectorReady(true)
+    })
+    }, [])
 
     return ( 
         <div className="filter-bar">
             <div className="filter-bar-title">Danışmanlık Alanları</div>
-            <ChipSelector updateCurrentOptions={() => {}} currentOptions={[]} allOptions={names} label={"Alan"}/>
+            {areaSelectorReady && <ChipSelector updateCurrentOptions={(options) => {setSelectedAreas(options)}} currentOptions={[]} allOptions={allAreas} label={"Alan"}/>}
             <div className="filter-bar-seperator"></div>
             <div className="filter-bar-title">Danışmanlık Ücretleri</div>
-            <MinMaxSelector />
+            <MinMaxSelector handleMinChange={setSelectedMin} handleMaxChange={setSelectedMax} />
             <div className="filter-bar-seperator"></div>
             <div className="filter-bar-title">Aranan Gün</div>
-            <ChipSelector updateCurrentOptions={() => {}} currentOptions={[]} allOptions={days} label={"Gün"}/>
+            <ChipSelector updateCurrentOptions={(options) => {setSelectedDays(options)}} currentOptions={[]} allOptions={days} label={"Gün"}/>
             <div className="filter-bar-seperator"></div>
             <div className="filter-bar-title">Aranan Saat Aralığı</div>
-            <TimeRangeSelector />
+            <TimeRangeSelector handleStartChange={setSelectedStartHour} handleEndChange={setSelectedEndHour} />
             <div className="filter-bar-vertical-margin"></div>
-            <Button variant="contained" size="small">Uygula</Button>
+            <Button variant="contained" onClick={handleFilterButton} size="small">Uygula</Button>
             
         </div>
      );
