@@ -25,8 +25,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function ArrangeMeetingPopup(props) {
 
-    console.log(props)
-
     const [cookies, setCookie] = useCookies(['access_token'])
 
     const names = [
@@ -49,7 +47,7 @@ function ArrangeMeetingPopup(props) {
         props.closePopup()
     };
 
-    const stepViews = [<MeetingScheduler freeTimes={props.consultant.consultant_info.freeTimes} setSelectedTime={setSelectedTime} />, <ScheduleMeetingTextField />, <div>Randevunuzu onaylandı!</div>]
+    const stepViews = [<MeetingScheduler freeTimes={props.consultant.consultant_info.freeTimes} setSelectedTime={setSelectedTime} />, <ScheduleMeetingTextField subAreas={props.consultant.consultant_info.provideSubAreas}/>, <div>Randevunuzu onaylandı!</div>]
 
     const [activeStep, setActiveStep] = React.useState(0);
 

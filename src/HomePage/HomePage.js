@@ -35,7 +35,7 @@ function HomePage() {
                     </div>
 
                     <div className="banner-small-title">
-                        evini terketmeden gibi bişey
+                        Evini terketmeye gerek yok!
                     </div>
 
                     <div className="search-bar">
