@@ -33,7 +33,7 @@ function ResultCard(props) {
 
       <div className='result-card-img'></div>
       <div className='result-card-txt'>
-        <div className='result-card-txt-name'><p>{consultant.first_name}</p></div>
+        <div className='result-card-txt-name'><p>{consultant.first_name + " " + consultant.last_name}</p></div>
         <div className='result-card-txt-rating'>
           <Rating name="read-only" value={consultant.consultant_info.average_rating} precision={0.01} readOnly />
           <div className='result-card-txt-rating-text'><p>{consultant.consultant_info.average_rating} ({consultant.consultant_info.total_review})</p></div>
